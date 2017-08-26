@@ -28,7 +28,7 @@ class LongestPlateau
             delete[] m_a;
     };
 
-    Init(int sz)
+    void Init(int sz)
     {
         m_sz = sz;
         if (m_a)
