@@ -8,6 +8,7 @@
 #include <iostream>
 #include <chrono>
 #include <random>
+#include <cstdlib>
 
 class LongestPlateau
 {
@@ -24,28 +25,26 @@ class LongestPlateau
   public:
     ~LongestPlateau()
     {
-        if (m_a)
-            delete[] m_a;
+        delete [] m_a;
     };
 
     void Init(int sz)
     {
         m_sz = sz;
-        if (m_a)
-            delete m_a;
+        delete [] m_a;
         m_a = new int[sz];
-		
+        
         // Populate the array a with some random numbers
         //   Use current time as seed for random generator
-		unsigned seed = 
-		    std::chrono::system_clock::now().time_since_epoch().count();
-	    std::default_random_engine re{seed};
-	    std::uniform_int_distribution<int> dist{1,5};
+        unsigned seed = 
+            std::chrono::system_clock::now().time_since_epoch().count();
+        std::default_random_engine re{seed};
+        std::uniform_int_distribution<int> dist{1,5};
         for (int i = 0; i < m_sz; ++i)
         {
             m_a[i] = dist(re);
         }
-		
+        
         m_start = 0;
         m_len = 0;
     }
@@ -113,46 +112,74 @@ void LongestPlateau::__FindLongestPlateau()
     }
 }
 
-int main()
+int main(int argc, char *argv[])
 {
 
-    std::cout << "LONGEST PLATEAU PROBLEM\n";
-    std::cout << "Data len? ";
-    int len = 0;
-    std::cin >> len;
-    if (len > 0)
+    std::cout << "LONGEST PLATEAU PROBLEM";
+    
+    int trials = atoi(argv[1]);
+    for (int i = 0; i < trials; ++i)
     {
-        LongestPlateau lp;
-        lp.Init(len);
-        lp.PrintResult();
-    }
-    else
-    {
-        std::cerr << "Invalid input length!\n";
+        std::cout << "\nTrail " << (i + 1) << "\nData len? ";
+        int len = 0;
+        std::cin >> len;
+        if (len > 0)
+        {
+            LongestPlateau lp;
+            lp.Init(len);
+            lp.PrintResult();
+        }
+        else
+        {
+            std::cerr << "Invalid input length!\n";
+        }
     }
 }
 ///:~
 
 /* 
-~ ~ ~ SAMPLE OUTPUT: RUN - 1 ~ ~ ~
+>longestplateau.o 7
 LONGEST PLATEAU PROBLEM
+Trail 1
 Data len? 37
 Input array of size 37:
-2 3 1 3 2 3 1 4 3 2 4 2 4 2 4 4 4 3 1 1 1 3 1 5 2 2 2 3 5 5 1 1 4 2 4 4 2
-Longest Plateau (start index - length): 14 - 3
+2 5 5 5 1 5 3 5 5 1 5 1 5 2 1 1 3 5 3 3 4 3 3 5 2 4 3 4 3 5 1 3 5 4 5 4 1
+Longest Plateau (start index - length): 1 - 3
 
-~ ~ ~ SAMPLE OUTPUT: RUN - 2 ~ ~ ~
-LONGEST PLATEAU PROBLEM
+Trail 2
+Data len? 61
+Input array of size 61:
+4 3 5 3 4 1 5 1 3 3 4 1 3 2 2 3 5 5 5 2 5 5 2 4 5 5 4 5 3 3 3 4 4 4 1 5 4 5 4 5 1 2 2 5 5 3 5 2 5 1 4 2 3 1 4 5 4 2 4 4 4
+Longest Plateau (start index - length): 31 - 3
+
+Trail 3
+Data len? 10
+Input array of size 10:
+5 4 1 5 5 3 2 1 2 3
+Longest Plateau (start index - length): 3 - 2
+
+Trail 4
 Data len? 1
 Input array of size 1:
-1
+3
 Input data has no plataeu!
 
-~ ~ ~ SAMPLE OUTPUT: RUN - 3 ~ ~ ~
-LONGEST PLATEAU PROBLEM
+Trail 5
 Data len? 2
 Input array of size 2:
-4 5
+1 3
 Input data has no plataeu!
+
+Trail 6
+Data len? 3
+Input array of size 3:
+2 1 5
+Input data has no plataeu!
+
+Trail 7
+Data len? 29
+Input array of size 29:
+1 3 1 3 3 3 5 2 2 3 1 2 4 5 3 1 4 1 4 5 3 5 5 3 3 3 4 4 5
+Longest Plateau (start index - length): 21 - 2
 
 */
