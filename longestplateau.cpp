@@ -5,9 +5,9 @@
  * after this sequence are smaller.
  */
 
-#include <cstdlib>
 #include <iostream>
-#include <ctime>
+#include <chrono>
+#include <random>
 
 class LongestPlateau
 {
@@ -34,15 +34,18 @@ class LongestPlateau
         if (m_a)
             delete m_a;
         m_a = new int[sz];
-
+		
         // Populate the array a with some random numbers
         //   Use current time as seed for random generator
-        std::srand(std::time(0));
+		unsigned seed = 
+		    std::chrono::system_clock::now().time_since_epoch().count();
+	    std::default_random_engine re{seed};
+	    std::uniform_int_distribution<int> dist{1,5};
         for (int i = 0; i < m_sz; ++i)
         {
-            m_a[i] = std::rand() % 5;
+            m_a[i] = dist(re);
         }
-
+		
         m_start = 0;
         m_len = 0;
     }
@@ -131,10 +134,25 @@ int main()
 ///:~
 
 /* 
-SAMPLE OUTPUT
+~ ~ ~ SAMPLE OUTPUT: RUN - 1 ~ ~ ~
 LONGEST PLATEAU PROBLEM
-Data len? 47
-Input array of size 47:
-2 3 3 0 3 4 4 4 4 1 0 2 1 4 1 3 3 0 4 1 2 0 3 3 1 0 3 4 1 0 4 2 1 1 2 0 4 1 2 0 3 4 0 1 4 4 3
-Longest Plateau (start index - length): 5 - 4
+Data len? 37
+Input array of size 37:
+2 3 1 3 2 3 1 4 3 2 4 2 4 2 4 4 4 3 1 1 1 3 1 5 2 2 2 3 5 5 1 1 4 2 4 4 2
+Longest Plateau (start index - length): 14 - 3
+
+~ ~ ~ SAMPLE OUTPUT: RUN - 2 ~ ~ ~
+LONGEST PLATEAU PROBLEM
+Data len? 1
+Input array of size 1:
+1
+Input data has no plataeu!
+
+~ ~ ~ SAMPLE OUTPUT: RUN - 3 ~ ~ ~
+LONGEST PLATEAU PROBLEM
+Data len? 2
+Input array of size 2:
+4 5
+Input data has no plataeu!
+
 */
