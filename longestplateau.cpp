@@ -120,7 +120,7 @@ int main(int argc, char *argv[])
     int trials = atoi(argv[1]);
     for (int i = 0; i < trials; ++i)
     {
-        std::cout << "\nTrail " << (i + 1) << "\nData len? ";
+        std::cout << "\nTrial " << (i + 1) << "\nData len? ";
         int len = 0;
         std::cin >> len;
         if (len > 0)
@@ -138,48 +138,24 @@ int main(int argc, char *argv[])
 ///:~
 
 /* 
->longestplateau.o 7
+>longestplateau.o 3
 LONGEST PLATEAU PROBLEM
-Trail 1
-Data len? 37
-Input array of size 37:
-2 5 5 5 1 5 3 5 5 1 5 1 5 2 1 1 3 5 3 3 4 3 3 5 2 4 3 4 3 5 1 3 5 4 5 4 1
-Longest Plateau (start index - length): 1 - 3
+Trial 1
+Data len? 41
+Input array of size 41:
+3 2 4 4 3 3 2 4 5 2 5 3 1 4 5 3 4 2 3 5 2 3 5 4 4 4 3 3 4 2 5 1 2 1 3 3 1 3 2 4 1
+Longest Plateau (start index - length): 34 - 2
 
-Trail 2
-Data len? 61
-Input array of size 61:
-4 3 5 3 4 1 5 1 3 3 4 1 3 2 2 3 5 5 5 2 5 5 2 4 5 5 4 5 3 3 3 4 4 4 1 5 4 5 4 5 1 2 2 5 5 3 5 2 5 1 4 2 3 1 4 5 4 2 4 4 4
-Longest Plateau (start index - length): 31 - 3
-
-Trail 3
-Data len? 10
-Input array of size 10:
-5 4 1 5 5 3 2 1 2 3
-Longest Plateau (start index - length): 3 - 2
-
-Trail 4
+Trial 2
 Data len? 1
 Input array of size 1:
-3
+5
 Input data has no plataeu!
 
-Trail 5
-Data len? 2
-Input array of size 2:
-1 3
-Input data has no plataeu!
-
-Trail 6
-Data len? 3
-Input array of size 3:
-2 1 5
-Input data has no plataeu!
-
-Trail 7
-Data len? 29
-Input array of size 29:
-1 3 1 3 3 3 5 2 2 3 1 2 4 5 3 1 4 1 4 5 3 5 5 3 3 3 4 4 5
-Longest Plateau (start index - length): 21 - 2
+Trial 3
+Data len? 37
+Input array of size 37:
+2 5 3 1 3 3 3 1 5 3 5 5 3 4 2 1 1 2 3 5 5 2 4 1 2 5 4 5 5 2 3 4 4 5 1 4 3
+Longest Plateau (start index - length): 4 - 3
 
 */
