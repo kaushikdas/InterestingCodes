@@ -3,7 +3,7 @@
 using namespace std;
 
 const int MAX_POINTS = 100001;
-const long long MAX_DISTANCE = 80000000010L;
+const long long MAX_DISTANCE = 80000000010L; // 2 * 100,000^2 + 10 (extra)
 
 struct Point2D
 {
