@@ -73,7 +73,8 @@ class ClosestPair:
 
         strip = []; m = 0
         for i in range(lo, hi):
-            if abs(ptsY[i].x - ptsX[mid].x) < delta: 
+            sqd = (ptsY[i].x - ptsX[mid].x) * (ptsY[i].x - ptsX[mid].x)
+            if sqd < delta: 
                 strip += [ptsY[i]]; m += 1
         
         for i in range(m):
