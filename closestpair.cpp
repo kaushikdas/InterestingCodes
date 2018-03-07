@@ -2,8 +2,8 @@
 
 using namespace std;
 
-const int MAX_POINTS = 100001;
-const long long MAX_DISTANCE = 80000000010L; // 2 * 100,000^2 + 10 (extra)
+const int MAX_POINTS = 100000;
+const long long MAX_DISTANCE = 99999999999L;
 
 struct Point2D
 {
@@ -12,20 +12,32 @@ struct Point2D
     Point2D() : x(0), y(0) {};
     Point2D(int xval, int yval) : x(xval), y (yval) {};
 
-    bool operator ==(Point2D other)
+    inline bool operator ==(Point2D other)
     {
         return ((x == other.x) && (y == other.y));
     };
 
-    int comparePoints(Point2D other, bool compareX = true)
+    inline int comparePoints(Point2D other, bool compareX = true)
     {
         return compareX ? (x - other.x) : (y - other.y);
     }
 
-    long long sqDistance(Point2D other)
+    inline long long sqDistance(Point2D other)
     {
-        return ((x - other.x) * (x - other.x) + 
-                (y - other.y) * (y - other.y));
+        long long dx = (x - other.x), dy = (y - other.y);
+        return (dx * dx + dy * dy);
+    };
+
+    inline long long sqDistanceX(Point2D other)
+    {
+        long long dx = (x - other.x);
+        return (dx * dx);
+    };
+
+    inline long long sqDistanceY(Point2D other)
+    {
+        long long dy = (y - other.y);
+        return (dy * dy);
     };
 };
 
@@ -80,37 +92,40 @@ class ClosestPair
     };
 
     // Find closest pair and (square) distance
-    long long closest(int ptsX[], int ptsY[], int lo, int hi)
+    long long closest(int lo, int hi)
     {
         if ((hi - lo) <= 1)
             return MAX_DISTANCE;
 
         int mid = (hi + lo) / 2;
-        long long minDistanceLeft = closest(ptsX, ptsY, lo, mid);
-        long long minDistanceRight = closest(ptsX, ptsY, mid, hi);
+        long long minDistanceLeft = closest(lo, mid);
+        long long minDistanceRight = closest(mid, hi);
         long long delta = getMin(minDistanceLeft, minDistanceRight);
 
         // Sort ptsY[lo ... mid ... hi - 1] on y cordinate
         merge(ptsY, lo, mid, hi, false);
 
         int m = 0;
-        long long sqd = 0;
+        long long dx2 = 0;
         for (int i = lo; i < hi; ++i) {
-            sqd = (p[ptsY[i]].x - p[ptsX[mid]].x) 
-                        * (p[ptsY[i]].x - p[ptsX[mid]].x);
-            if (sqd < delta)
+            dx2 = p[ptsX[mid]].sqDistanceX(p[ptsY[i]]);
+            if (dx2 < delta)
                 strip[m++] = ptsY[i];
         }
 
         for (int i = 0; i < m; ++i)
             for (int j = i + 1; j < m; ++j) {
-                sqd = p[ptsY[i]].sqDistance(p[ptsY[j]]);
-                if (sqd < delta) {
-                    delta = sqd;
+                auto dy2 = p[strip[i]].sqDistanceY(p[strip[j]]);
+                // The below check will ensure that the for loop
+                // of j runs for a maximum of 7 times
+                if (dy2 >= delta) break;
+                auto d2 = p[strip[i]].sqDistance(p[strip[j]]);
+                if (d2 < delta) {
+                    delta = d2;
                     if (delta < closestDistance) {
                         closestDistance = delta;
-                        closestPt1 = ptsY[i];
-                        closestPt2 = ptsY[j];
+                        closestPt1 = strip[i];
+                        closestPt2 = strip[j];
                     }
                 }
             }
@@ -157,7 +172,7 @@ public:
         // Copy the final point outside loop
         ptsY[N - 1] = ptsX[N - 1];
 
-        closest(ptsX, ptsY, 0, N);
+        closest(0, N);
     };
 
     long long getDistance()
@@ -175,11 +190,7 @@ public:
 
 int main()
 {
-    /**
-     * To debug the code in Visual Studio Code change the path to 
-     * Python/closestpair.txt
-     */
-    freopen("../Python/closestpair.txt", "r", stdin);
+    // freopen("closestpair.txt", "r", stdin);
 
     int t = 0, TC = 0;
     cin >> TC;
@@ -188,7 +199,8 @@ int main()
         cp.readTcInput();
         cp.find();
         cout << "#" << t + 1 << " ";
-        cp.display();
+        //cp.display();
+        cout << cp.getDistance() << "\n";
     }
     return 0;
 }
