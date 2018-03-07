@@ -13,8 +13,16 @@ class Point2D:
         return self.y - other.y
     
     def sqDistance(self, other):
-        return ((self.x - other.x) * (self.x - other.x)) + \
-                ((self.y - other.y) * (self.y - other.y)) 
+        dx = self.x - other.x; dy = self.y - other.y
+        return (dx * dx + dy * dy)
+
+    def sqDistanceX(self, other):
+        dx = self.x - other.x
+        return dx * dx
+
+    def sqDistanceY(self, other):
+        dy = self.y - other.y
+        return dy * dy
 
 class ClosestPair:
     def __init__(self):
@@ -27,6 +35,7 @@ class ClosestPair:
     def readTcInput(self):
         self.N = int(input())
         for j in range(self.N):
+            # use raw_input() for Pythin 2.x
             coords = [int(i) for i in input().split(' ')]
             self.p += [Point2D(coords[0], coords[1])]
 
@@ -73,15 +82,20 @@ class ClosestPair:
 
         strip = []; m = 0
         for i in range(lo, hi):
-            sqd = (ptsY[i].x - ptsX[mid].x) * (ptsY[i].x - ptsX[mid].x)
-            if sqd < delta: 
+            dx2 = ptsX[mid].sqDistanceX(ptsY[i])
+            if dx2 < delta: 
                 strip += [ptsY[i]]; m += 1
         
         for i in range(m):
             for j in range(i + 1, m):
-                distance = strip[i].sqDistance(strip[j])
-                if distance < delta:
-                    delta = distance
+                dy2 = strip[i].sqDistanceY(strip[j])
+                # The below check will ensure that the for loop
+                # of j runs for a maximum of 7 times
+                if dy2 >= delta: break
+
+                d2 = strip[i].sqDistance(strip[j])
+                if d2 < delta:
+                    delta = d2
                     if delta < self.closestDistance:
                         self.closestDistance = delta
                         self.closestPt1 = strip[i]
@@ -96,7 +110,7 @@ class ClosestPair:
         for i in range(self.N): ptsX += [self.p[i]]
         
         # Sort points on their x cordinates
-        self.mergeSort(ptsX, 0, self.N - 1)
+        self.mergeSort(ptsX, 0, self.N)
         # Now ptsX is sorted on x cordinate
 
         # Copy points sorted on x coordinate, ptsX, to another
@@ -122,13 +136,9 @@ class ClosestPair:
 
     def getDistance(self):
         return self.closestDistance
-        # self.mergeSort(self.p, 0, self.N, False)
-        # for i in range(self.N):
-        #     sys.stdout.write('(' + str(self.p[i].x) + ', ' + str(self.p[i].y) + ') ')
-        # sys.stdout.write('\n')
 
 def main():
-    sys.stdin = open('.\\Python\closestpair.txt')
+    # sys.stdin = open('closestpair.txt')
     TC = int(input())
     for t in range(TC):
         cp = ClosestPair()
@@ -140,7 +150,7 @@ def main():
         cp.display()
 
     # Restore stdin
-    sys.stdin = sys.__stdin__
+    # sys.stdin = sys.__stdin__
 
 if __name__ == '__main__': main()
 
