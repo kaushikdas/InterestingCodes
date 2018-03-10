@@ -1,3 +1,9 @@
+'''
+Maximize gcd of a set of given numbers by dividing one number a of the set 
+by some prime number p and multiplying another number b in the the same set
+by p. Also print the number of operations to maximize the gcd.
+'''
+
 import sys
 
 class MathGame:
