@@ -270,7 +270,7 @@ public:
       printf("  <TRIE_EXCEPTION> keyWithPrefix - prefix is null!\n");
     setSearchKey(prefix);
     Nd *x = search(root, 0);
-    // x is the nore till which the prefix exactly matches
+    // x is the node till which the prefix exactly matches
     collect(x, prefix, results);
   };
 
@@ -336,8 +336,16 @@ int main()
   char *t = trie.longestPrefix("shellsort");
   printf("[TRIE] Longest prefix of \"shellsort\" is \"%s\".\n", t);
   free(t);
+
+  printf("[TRIE_MAIN] keys with prefix \"se\"...\n");
+  char pre[MAX_KEY_LEN] = { 's', 'e' };
+  trie.keysWithPrefix(pre, results);
+  results.iterateQ();
+  results.flushQ();
+
   return 0;
 }
+///:~
 
 /*
 INPUT (TrieInput.txt)
@@ -370,24 +378,27 @@ TRIE_MAIN
 [TRIE_MAIN] Found (the, 5).
 [TRIE_MAIN] Found (seashore, 6).
 [TRIE_MAIN] Search a non-existing key "false"...
-  <TRIE_INFO> key false not found.
+<TRIE_INFO> key false not found.
 [TRIE_MAIN] Key-Value pairs in the trie.
-  (by, 4)
-  (sea, 2)
-  (seashore, 6)
-  (sells, 1)
-  (she, 0)
-  (shells, 3)
-  (the, 5)
+(by, 4)
+(sea, 2)
+(seashore, 6)
+(sells, 1)
+(she, 0)
+(shells, 3)
+(the, 5)
 [TRIE_MAIN] Removing keys "sea" and "sha" from the trie.
 <TRIE_INFO> remove - key "sha" is not found!
 [TRIE_MAIN] After removal trie has 6 keys.
 [TRIE_MAIN] Key-Value pairs in the trie after removal.
-  (by, 4)
-  (seashore, 6)
-  (sells, 1)
-  (she, 0)
-  (shells, 3)
-  (the, 5)
+(by, 4)
+(seashore, 6)
+(sells, 1)
+(she, 0)
+(shells, 3)
+(the, 5)
 [TRIE] Longest prefix of "shellsort" is "shells".
+[TRIE_MAIN] keys with prefix "se"...
+(seashore, 6)
+(sells, 1)
 */
