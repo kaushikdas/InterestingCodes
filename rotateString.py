@@ -1,10 +1,47 @@
 import sys
 
-def gcd(i, j):
+# NOT USED
+def gcdEuclidianAdditive(i, j):
     while i != j:
         if i > j: i -= j
         else    : j -= i
     return i
+
+# NOT USED
+def gcdEucid(i, j):
+    if j == 0: return i
+    return gcdEucid(j, i % j)
+
+'''
+Binary GCD
+gcd(i, j) =
+  * i if j = 0
+  * j if i = 0
+  * 2 * gcd(i/2, j/2) if i & j are even, because 2 is common factor
+  * gcd(i/2, j) if i is even & j is odd, because 2 isn't common factor
+  * gcd(i, j/2) if i is odd and j is even, because 2 isn't common factor
+  * gcd((i-j)/2, j) if i and j are odd and i >= j
+  * gcd(i, (j-i)/2) if i and j are odd and i < j 
+'''
+def gcdBinary(i, j):
+    if j == 0: return i
+    if i == 0: return j
+
+    # i and j even
+    if ((i & 1) == 0 and (j & 1) == 0): 
+        return gcdBinary(i >> 1, j >> 1) << 1
+    # i is even, j is odd
+    elif ((i & 1) == 0):
+        return gcdBinary(i >> 1, j)
+    # i is odd, j is even
+    elif ((j & 1) == 0):
+        return gcdBinary(i, j >> 1)
+    # i and j odd, i >= j
+    elif (i >= j):
+        return gcdBinary((i-j) >> 1, j)
+    # i and j odd, i < j
+    else:
+        return gcdBinary(i, (j-i) >> 1)
 
 '''
 Rotates LEFT string s by n positions
@@ -12,7 +49,7 @@ Rotates LEFT string s by n positions
 def rotate(s, n):
     lst = list(s)
     sz = len(lst)
-    g = gcd(n, sz)
+    g = gcdBinary(n, sz)
     print("[Rotate] looping %d time(s)..." % g)
     for i in range(g):
         t = lst[i] # Temporarily store ith element
@@ -42,9 +79,3 @@ $ python3 rotateString.py abcdefgh 3
 [Rotate] looping 1 time(s)...
 Original String: abcdefgh
 Rotated String: defghabc
-
-$ python3 rotateString.py abcdefghi 3
-[Rotate] looping 3 time(s)...
-Original String: abcdefghi
-Rotated String: defghiabc
-'''
