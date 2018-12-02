@@ -79,3 +79,9 @@ $ python3 rotateString.py abcdefgh 3
 [Rotate] looping 1 time(s)...
 Original String: abcdefgh
 Rotated String: defghabc
+
+$ python3 rotateString.py abcdefghi 3
+[Rotate] looping 3 time(s)...
+Original String: abcdefghi
+Rotated String: defghiabc
+'''
