@@ -18,12 +18,14 @@ nameLookup = FOREACH metaData GENERATE movieID, movieTitle,
         ToUnixTime(ToDate(releaseDate, 'dd-MMM-yyyy')) AS releaseTime;
 
 ratingsByMovie = GROUP ratings BY movieID;
-
-avgRatings = FOREACH ratingsByMovie 
+avgRatings = FOREACH ratingsByMovie
     GENERATE group AS movieID,    -- group is the a new column name
-             AVG(ratings.rating) AS avgRating;
+             AVG(ratings.rating) AS avgRating,
+             COUNT(ratings.rating) AS ratingCount;
 
-fiveStarMovies = FILTER avgRatings BY avgRating > 4.0;
+-- consider movies rated by at least 10 viewers
+fiveStarMovies = FILTER avgRatings
+    BY (avgRating > 4.0 AND ratingCount > 10);
 
 fiveStarsWithData = JOIN fiveStarMovies BY movieID, nameLookup BY movieID;
 
