@@ -1,4 +1,11 @@
+# For C or C++
 C_C++/*.exe
+C_C++/*.o
+
+# For Java Gradle
 Java/Gradle/.gradle
 Java/Gradle/.idea
 Java/Gradle/build
+
+# For Python
+Python/__pycache__/
