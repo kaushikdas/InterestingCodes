@@ -5,6 +5,7 @@ C_C++/*.ilk
 C_C++/*.pdb
 *.pdb
 *.obj
+C_C++/lab
 
 # For Java Gradle
 Java/Gradle/.gradle
@@ -13,3 +14,9 @@ Java/Gradle/build
 
 # For Python
 Python/__pycache__/
+
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build
