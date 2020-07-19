@@ -1,0 +1,15 @@
+plugins {
+    id 'java'
+    id 'application' 
+}
+
+mainClassName = 'GreeterApp'
+
+repositories {
+    jcenter() 
+}
+
+// Dependencies specified as Maven coordinates
+dependencies {
+    implementation 'com.github.lalyos:jfiglet:0.0.8' 
+}
