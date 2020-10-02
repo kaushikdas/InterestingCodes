@@ -1,8 +1,6 @@
 #include <iostream>
 #include <string>
 
-using namespace std;
-
 namespace kd 
 {
 
@@ -212,7 +210,7 @@ std::ostream& operator<<(std::ostream& os, kd::NumberWord nw)
 int main(int argc, char const *argv[])
 {
     /* code */
-    std::cout << "Number word client" << endl;
+    std::cout << "Number word client" << std::endl;
     kd::NumberWord nw;
 
     int tc{};
