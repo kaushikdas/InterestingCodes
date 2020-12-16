@@ -34,15 +34,15 @@ private:
 
   inline bool _is_dead_end(int i, int j, const matrix_t& matrix) const
   {
-  int next_i = i + MOVES[_d][0];
-  int next_j = j + MOVES[_d][1];
+    int next_i = i + MOVES[_d][0];
+    int next_j = j + MOVES[_d][1];
 
-  if ((next_i >= _n) || (next_j >= _n)
-      || (next_i < 0) || (next_j < 0)
-      || (0 != matrix[next_i][next_j]))
-    return true;
+    if ((next_i >= _n) || (next_j >= _n)
+        || (next_i < 0) || (next_j < 0)
+        || (0 != matrix[next_i][next_j]))
+      return true;
 
-  return false;
+    return false;
   }
 
   inline void _make_move(int& i, int&j)
