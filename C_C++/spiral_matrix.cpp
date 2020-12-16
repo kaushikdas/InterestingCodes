@@ -72,6 +72,15 @@ matrix_t spiral_matrix::generate_matrix()
     for (size_t j = 0; j < _n; j++)
     {
       matrix[r][c] = i * _n + j + 1;
+      /*
+       * ---> ---> --->\
+       *  ^ -> -> ->  |
+       *  |           v
+       *  
+       *  ^           |
+       *  |           v
+       *  \<-- <-- <--/ 
+       */
       if (_is_dead_end(r, c, matrix)) {
         _d = NEXT_DIRECTION[_d];
       }
