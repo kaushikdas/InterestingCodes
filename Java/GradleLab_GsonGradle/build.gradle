@@ -1,4 +1,6 @@
-apply plugin: 'application'
+plugins {
+    id 'application'
+}
 
 mainClassName = 'lab.java.gradle.kaushik.SensorEvent'
 
@@ -10,7 +12,7 @@ sourceSets {                   // Add source set
 }
 
 dependencies {
-    compile 'com.google.code.gson:gson:2.8.6'    // compile config
+    implementation 'com.google.code.gson:gson:2.8.6'    // compile config
     // '<co_name.artifact_name.artifact_version>
 }
 
