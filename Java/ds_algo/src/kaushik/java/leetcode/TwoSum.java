@@ -1,4 +1,5 @@
-import java.util.Arrays;
+package kaushik.java.leetcode;
+
 import java.util.HashMap;
 
 public class TwoSum {
