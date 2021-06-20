@@ -1,21 +1,12 @@
 plugins {
-    id 'application'
+    id 'java'
 }
 
-mainClassName = 'lab.java.gradle.kaushik.SensorEvent'
-
-sourceSets {                   // Add source set
-    main {                      // For main Java code (and not Test code, we don't have any yet)
-        java.srcDirs = ['src']  // Add directory containing source files...
-        // ... add multiple dirs (if any) separated by commas
-    }
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
-dependencies {
-    implementation 'com.google.code.gson:gson:2.8.6'    // compile config
-    // '<co_name.artifact_name.artifact_version>
-}
-
-repositories {
-    mavenCentral()
+compileJava {
+    options.compilerArgs << '-Werror'
 }
