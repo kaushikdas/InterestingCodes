@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    id 'application'    // apply application plugin
+                        // IMP: It needs mainClass property to be set
 }
 
 version = '1.0-SNAPSHOT'
@@ -11,6 +13,11 @@ java {
 
 compileJava {
     options.compilerArgs << '-Werror'
+}
+
+application {
+    // Set mandatory mainClass property for application plugin
+    mainClassName = 'lab.java.gradle.kaushik.SensorEvent'
 }
 
 jar {
