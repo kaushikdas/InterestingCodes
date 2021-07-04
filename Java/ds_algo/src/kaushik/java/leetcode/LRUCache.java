@@ -2,21 +2,26 @@ package kaushik.java.leetcode;
 
 import java.util.HashMap;
 
-class Node<K, V> {
-    K k;
-    V v;
+class Node<T, U> {
+    T k;
+    U v;
 
-    Node<K, V> next;
-    Node<K, V> prev;
+    Node<T, U> next;
+    Node<T, U> prev;
+
+    Node(T k, U v) {
+        this.k = k;
+        this.v = v;
+    }
 }
 
 class Dll<K, V> {
     private Node<K, V> sentinelHead;
     private Node<K, V> sentinelTail;
 
-    public Dll() {
-        sentinelHead = new Node<>();
-        sentinelTail = new Node<>();
+    public Dll(K k, V v) {
+        sentinelHead = new Node<>(k, v);
+        sentinelTail = new Node<>(k, v);
 
         sentinelHead.next = sentinelTail;
         sentinelTail.prev = sentinelHead;
@@ -58,7 +63,7 @@ class LRUCache {
         this.capacity = capacity;
 
         hm = new HashMap<>();
-        keyList = new Dll<>();
+        keyList = new Dll<>(0, 0);
     }
 
     public int get(int key) {
@@ -89,12 +94,8 @@ class LRUCache {
         else {
             // check if the hm is full
             if (hm.size() < capacity) { // hm is not full
-                nd = new Node<>();
-                nd.k = key;
-                nd.v = value;
-
+                nd = new Node<>(key, value);
                 hm.put(key, nd);
-
                 keyList.addFirst(nd);
             }
             else {
