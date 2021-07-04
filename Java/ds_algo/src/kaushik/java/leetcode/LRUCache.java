@@ -2,20 +2,20 @@ package kaushik.java.leetcode;
 
 import java.util.HashMap;
 
-class Node<T, U> {
-    T k;
-    U v;
-
-    Node<T, U> next;
-    Node<T, U> prev;
-
-    Node(T k, U v) {
-        this.k = k;
-        this.v = v;
-    }
-}
-
 class Dll<K, V> {
+    static class Node<T, U> {
+        T k;
+        U v;
+
+        Node<T, U> next;
+        Node<T, U> prev;
+
+        Node(T k, U v) {
+            this.k = k;
+            this.v = v;
+        }
+    }
+
     private Node<K, V> sentinelHead;
     private Node<K, V> sentinelTail;
 
@@ -50,13 +50,21 @@ class Dll<K, V> {
 
         return nd;
     }
+
+    public void moveToFirst(Node<K, V> nd) {
+        if (nd != sentinelHead.next) {
+            // This node is NOT already the first node
+            remove(nd);
+            addFirst(nd);
+        }
+    }
 }
 
 
 class LRUCache {
     private int capacity;
 
-    private HashMap<Integer, Node<Integer, Integer>> hm;
+    private HashMap<Integer, Dll.Node<Integer, Integer>> hm;
     private Dll<Integer, Integer> keyList;
 
     public LRUCache(int capacity) {
@@ -67,34 +75,31 @@ class LRUCache {
     }
 
     public int get(int key) {
-        Node<Integer, Integer> nd = hm.get(key);
+        Dll.Node<Integer, Integer> nd = hm.get(key);
 
         if (nd != null) { // key exists
             // Make this key as recent key
-            keyList.remove(nd);
-            keyList.addFirst(nd);
-
+            keyList.moveToFirst(nd);
             return nd.v;
         }
         return -1;
     }
 
     public void put(int key, int value) {
-        Node<Integer, Integer> nd = hm.get(key);
+        Dll.Node<Integer, Integer> nd = hm.get(key);
 
         if (nd != null) { // key exists
             // Make this key as recent key
-            keyList.remove(nd);
-            keyList.addFirst(nd);
+            keyList.moveToFirst(nd);
 
             // key exists - update value in map
             nd.v = value;
-            hm.put(key, nd);
+            // hm.put(key, nd); // --> This put is redundant
         }
         else {
             // check if the hm is full
             if (hm.size() < capacity) { // hm is not full
-                nd = new Node<>(key, value);
+                nd = new Dll.Node<>(key, value);
                 hm.put(key, nd);
                 keyList.addFirst(nd);
             }
