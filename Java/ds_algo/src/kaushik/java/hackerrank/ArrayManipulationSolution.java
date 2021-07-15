@@ -31,7 +31,7 @@ class ArrayManipulationSolution {
             // ..             a                    b
             // .. This indicates that all elements before index a and after
             // .. index b are less than [a..b] by k. So that when we calculate
-            // .. the value at an index using COMMULATIVE sum till that index
+            // .. the value at an index using CUMULATIVE sum till that index
             // .. we get the correct value.
             arr[a] += k;
             if ((b+1) <= n) {
