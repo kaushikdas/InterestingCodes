@@ -44,7 +44,7 @@ class OrganizingContainersofBallsSoln {
                     // col[i+1] != size, ... col[j-1] != size BUT
                     // col[j] == size.
                     // We exchange, col[j] with col[i] because next
-                    // in the next iteration serach of a colour
+                    // in the next iteration search of a colour
                     // freq will start from next i (i.e., i+1).
                     // Therefore col[0...i] stores the freq of colours
                     // that are already settled in box[0...i].
