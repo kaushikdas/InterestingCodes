@@ -41,7 +41,7 @@ class OrganizingContainersofBallsSoln {
                     // ith container can exactly fit all balls of color j
                     // exchange the frequency of colour i with that of
                     // colour j. Note, j >= i and col[i] != size,
-                    // col[i+1] != size, ... col[j-1] != size BUT
+                    // col[i] != size, ... col[j-1] != size BUT
                     // col[j] == size.
                     // We exchange, col[j] with col[i] because next
                     // in the next iteration search of a colour
