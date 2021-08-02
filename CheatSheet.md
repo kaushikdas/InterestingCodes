@@ -135,7 +135,7 @@
 |         `len(st)` | Length of `st`&mdash;_O_(1)                                                                         |
 |           `st[k]` | The values associated with key `k`&mdash;_O_(1)<br/>Raises `KeyError` if no such key                |
 |    `st.get(k, x)` | `st[k]` if `k` is in `st`; otherwise `x` (default `None`)                                           |
-|       `st[k] = v` | Associate key `k` with value `v``&mdash;_O_(1)                                                      |
+|       `st[k] = v` | Associate key `k` with value `v`&mdash;_O_(1)                                                       |
 |         `k in st` | `True` if `st` contains `k`, `False` otherwise&mdash;_O_(1)                                         |
 |       `del st[k]` | Delete key `k` and its associated value from `st`&mdash;_O_(1)<br/>Raises `KeyError` if no such key |
 |     `for k in st` | Iterate over _keys_ in `st`&mdash;_O_(_n_)                                                          |
