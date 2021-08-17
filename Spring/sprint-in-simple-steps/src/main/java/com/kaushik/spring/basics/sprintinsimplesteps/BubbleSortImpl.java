@@ -2,6 +2,7 @@ package com.kaushik.spring.basics.sprintinsimplesteps;
 
 import org.springframework.stereotype.Component;
 
+@Component
 public class BubbleSortImpl implements SortAlgorithm {
   public void sort(int[] a) {
     int n = a.length;

@@ -3,8 +3,10 @@ package com.kaushik.spring.basics.sprintinsimplesteps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+@Component
 public class BinarySearchImpl implements SearchAlgorithm {
 
+  @Autowired
   private SortAlgorithm sortAlgo;
 
   public BinarySearchImpl(SortAlgorithm sortAlgo) {
