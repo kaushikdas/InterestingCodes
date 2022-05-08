@@ -1,5 +1,34 @@
 # 1 C++
 
+## 1.1 Common
+
+### 1.1.1 Numeric limits
+
+#### C way
+
+[C Numeric limits](https://en.cppreference.com/w/cpp/types/climits)
+
+```cpp
+#include <climits>
+
+auto max = INT_MAX;
+auto min = INT_MIN;
+```
+
+#### C++ way
+
+[Numeric Limits](https://en.cppreference.com/w/cpp/types/numeric_limits)
+
+```cpp
+#include <limits>
+
+auto constexpr ulmax = std::numeric_limits<unsigned long>::max();
+auto constexpr imin = std::numeric_limits<int>::min();
+
+```
+
+## 1.2 String
+
 # 2 Java
 
 # 3 Python
