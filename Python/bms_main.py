@@ -1,8 +1,5 @@
 import bms_database as bankDb
 
-#######################################################################
-#                           DISPLAY MENU
-#######################################################################
 
 def displayMenu():
     print('+--------------------------------------------+')
@@ -11,15 +8,12 @@ def displayMenu():
     print('|   Available operations                     |')
     print('|                                            |')
     print('|   1. Create customer                       |')
-    print('|   2. Get customer details                  |')
-    print('|   3. Update customer details               |')
-    print('|   4. Delete customer                       |')
-    print('|   5. Open bank account                     |')
-    print('|   6. Get account details                   |')
-    print('|   7. Delete bank account                   |')
-    print('|   8. Transact                              |')
-    print('|   9. Quit                                  |')
-    print('+--------------------------------------------+\n')    
+    print('|   2. Open bank account                     |')
+    print('|   3. Get account details                   |')
+    print('|   4. Delete bank account                   |')
+    print('|   5. Transact                              |')
+    print('|   6. Quit                                  |')
+    print('+--------------------------------------------+\n')
 
 
 def getCustInfo():
@@ -27,7 +21,6 @@ def getCustInfo():
     name = input('  Customer name? ')
     mobile = input('  Mobile number? ')
     address = input('  Address? ')
-    
     return (name, mobile, address)
 
 
@@ -36,44 +29,6 @@ def newCustomer(dbCon, dbCursor):
     (insertedRowCount, newCustId) = bankDb.addCustToDb(
         dbCon, dbCursor, name, mobile, address)
     print(insertedRowCount, 'new customer added. custid:', newCustId)
-    
-    
-def getCustomerDetails(dbCursor):
-    custid = input('Enter custid: ')
-    data = bankDb.fetchCustomerDetailsFromDb(dbCursor, custid)
-    if data != None:
-        print('CUSTOMER DETAILS')
-        print('(custid, custname, mobile, address)')
-        print(data)
-    else:
-        print('Customer NOT found! custid =', custid)
-
-
-def updateCustomerDetails(dbCon, dbCursor):
-    custid = input('Enter custid to update: ')
-    # get existing details
-    existingData = bankDb.fetchCustomerDetailsFromDb(dbCursor, custid)
-    if existingData != None:
-        print('Enter updated information, leave empty if no change...')
-        newName = input('  New name? ')
-        if newName == '':
-            newName = existingData[1]
-        newMobile = input('  New mobile number? ')
-        if newMobile == '':
-            newMobile = existingData[2]
-        newAddress = input('  New address? ')
-        if newAddress == '':
-            newAddress = existingData[3]
-        count = bankDb.updateCustomerDetailsInDb(dbCon, dbCursor, 
-                                                custid,
-                                                newName, newMobile,
-                                                newAddress)
-        if count == 1:
-            print('Customer details update successful.')
-        else:
-            print('[ERROR] Customer details update failed!')
-    else:
-        print('Customer NOT found! custid =', custid)
 
 
 def deleteCustomer(dbCon, dbCursor):
@@ -82,17 +37,15 @@ def deleteCustomer(dbCon, dbCursor):
     if count == 1:
         print('Deleted customer, custid:', custid)
     else:
-        print('[ERROR] Delete customer failed! custid:', custid)
+        print('Delete customer failed! custid:', custid)
 
 
 def openBankAcc(dbCon, dbCursor):
     print('CREATING A NEW BANK ACCOUNT')
-    
-    # Choose account type
     accType = "SBAC"
     prefix = 'S'
-    print('\n  Step 1 - Account Type Selection')
-    print('  1. Savings\n  2. Current\n  3. Fixed deposit)\n')
+    print('  Step 1 - Account Type Selection')
+    print('  1. Savings\n  2. Current\n  3. Fixed deposit\n')
     typeInp = int(input('  Choose account type (1/2/3): '))
     if typeInp == 1:
         accType = "SBAC"
@@ -107,51 +60,41 @@ def openBankAcc(dbCon, dbCursor):
         accName = 'Fixed Account'
         prefix = 'F'
     else:
-        print('> [ERROR] Failed! Wrong account type ({typeInp})!')
+        print('> Failed! Wrong account type ({typeInp})!')
         return False
-    
-    # Main customer details
+
     print('\n  Step 2 - Primary Customer Selection')
     primCustId = input('  Enter custid of primary Customer: ')
     data = bankDb.fetchCustomerDetailsFromDb(dbCursor, primCustId)
     if data == None:
-        print('[ERROR] Failed to open acc. No such primary customer!')
+        print('Failed to open acc. No such primary customer!')
         return False
-    
-    # Joint customer details
     print('\n  Step 3 - Joint Customer Selection')
-    isJtAcc = input('  Any joint customer (y/n)? ')
+    isJtAcc = input('  Any joint customer (y/n)?')
     if isJtAcc == 'y':
-        jtCustId = input('  Enter custid of joint Customer: ')
+        jtCustId = input('  Enter custid of joint Customer:')
         data = bankDb.fetchCustomerDetailsFromDb(dbCursor, jtCustId)
         if data == None:
-            print('[ERROR] Failed to open acc. No such joint customer!')
+            print('Failed to open acc. No such joint customer.')
             return False
     else:
         jtCustId = primCustId
-    
-    # Creation date
     print('\n  Step 4 - Enter creation date')
     createDate = input('  Create date (YYYY-MM-DD)? ')
-    
-    # Initial balance
+
     balance = float(input('  Enter initial account balance: '))
-    
-    # Make a unique account no based on number of existing accounts
+
     accCount = bankDb.getAccCountFromDb(dbCursor)
     accNo = prefix + str(accCount + 1)
-    
-    insertedRowCount = bankDb.addAccToDb(dbCon, dbCursor, 
-                                         accNo, accType, accName,
-                                         primCustId, jtCustId,
-                                         createDate, createDate,
-                                         balance)
-    
+
+    insertedRowCount = bankDb.addAccToDb(dbCon, dbCursor,
+                                         accNo, accType, accName, primCustId, jtCustId,
+                                         createDate, createDate, balance)
     if insertedRowCount == 1:
         print('Successfully opened account. accNo:', accNo)
         return True
     else:
-        print('[ERROR] Failed to open account.')
+        print('Failed to open account.')
         return False
 
 
@@ -160,11 +103,11 @@ def getAccDetails(dbCursor):
     data = bankDb.fetchAccDetailsFromDb(dbCursor, accNo)
     if data != None:
         print('ACCOUNT DETAILS')
-        print('(accno, acctype, accname, maincustid, jtcustid, '+
-            'createdate, updatedate, balance)')
+        print('(accno, acctype, accname, prmcustid, jtcustid, ' +
+              'createdate, updatedate, balance)')
         print(data)
     else:
-        print('Account NOT found! accNo =', accNo)
+        print('Account NOT found. accNo =', accNo)
 
 
 def deleteAcc(dbCon, dbCursor):
@@ -173,66 +116,59 @@ def deleteAcc(dbCon, dbCursor):
     if count == 1:
         print('Successfully deleted account.')
     else:
-        print('[ERROR] Failed to delete account! accNo =', accNo)
-    
-    
+        print('Failed to delete account. accNo =', accNo)
+
+
 def transact(dbCon, dbCursor):
     accNo = input('Enter accNo to transact: ')
     data = bankDb.fetchAccDetailsFromDb(dbCursor, accNo)
     if data != None:
         print('ACCOUNT DETAILS')
-        print('(accno, acctype, accname, maincustid, jtcustid, '+
-            'createdate, updatedate, balance)')
+        print('(accno, acctype, accname, prmcustid, jtcustid, ' +
+              'createdate, updatedate, balance)')
         print(data)
-        type = int(input('Select type of transaction ' + 
-                        '(1. Withdraw 2. Deposit): '))
+        type = int(input('Select type of transaction ' +
+                         '(1. Withdraw 2. Deposit): '))
         amount = float(input('Enter amount: '))
         balance = float(data[7])
         if type == 1:
             if amount > data[7]:
-                print('[ERROR] Withdraw error! Insufficient balance.')
+                print('Withdraw error, Insufficient balance.')
                 return False
             else:
                 balance -= amount
         elif type == 2:
             balance += amount
-            
-        updateDt = input('  Update date (YYYY-MM-DD)? ')
-        count = bankDb.updateAccInDb(dbCon, dbCursor, accNo, balance, 
+        updateDt = input('  Update date (YYYY-MM-DD)?')
+        count = bankDb.updateAccInDb(dbCon, dbCursor, accNo, balance,
                                      updateDt)
         if count == 1:
             print('Transaction successful.')
             return True
         else:
-            print('[ERROR] Transaction failed!')
-            return False       
+            print('Transaction failed.')
+            return False
     else:
-        print('Account NOT found! accNo =', accNo)
+        print('Account NOT found.accNo =', accNo)
         return False
-        
-        
-# print a banner
+
+
 print('**************************')
 print('* BANK MANAGEMENT SYSTEM *')
 print('**************************')
 
-
 CORRECT_USER_NAME = 'maharnab'
 CORRECT_PASSWORD = 'maharnab'
 
-
-# Login to the system
 print('ENTER CREDENTIALS TO LOG IN TO THE SYSTEM')
 print('(Maximum 3 login attempts are allowed)\n')
 
 userName = ''
 password = ''
 
-# Should fail after 3 login attempts
-for i in range(3):
+for i in range(3):  # Should fail after 3 login attempts
     userName = input('Enter the user name: ')
     password = input(f'Enter the password for {userName}: ')
-    # validate entered username and password
     if userName != CORRECT_USER_NAME or password != CORRECT_PASSWORD:
         print('> ERROR: Wrong user name or password!')
         print('> Remaining', 3-i-1, 'attempts!')
@@ -240,62 +176,49 @@ for i in range(3):
         print('> Credentials verified successfully...')
         break
 else:
-    print('> [ERROR] Failed to login! EXIT!')
-    ######################## UNCOMMENT ########################
+    print('> Failed to login! EXIT!')
     quit()
-
 
 # connect to mysql
 print('> Initiailizing bank management system...')
 print('> Logging into the database...')
 dbCon, dbCursor = bankDb.connectToDb(userName, password)
 if dbCon == None:
-    print('> [ERROR] Failed to log into the database. EXIT')
+    print('>Failed to log into the database. EXIT')
     # quit
 else:
-    print('> Successfully logged into the database...')
+    print(' Successfully logged into the database...')
 
 
 bankDb.createDb(dbCon, dbCursor)
 
-
-# check accounts table
 print('> Checking accounts table...')
 accountTableName = 'bank_accs'
-existingAccs = bankDb.createAccTable(dbCon, dbCursor) 
+existingAccs = bankDb.createAccTable(dbCon, dbCursor)
 print(f'> Found details of {existingAccs} accounts...')
-
-# check customer table
 print('> Checking customer table...')
-customerTableName='bank_custs'
-existingCusts = bankDb.createCustTable(dbCon, dbCursor) 
+customerTableName = 'bank_custs'
+existingCusts = bankDb.createCustTable(dbCon, dbCursor)
 print(f'> Found details of {existingCusts} customers...')
 
-
+# menu starts
 choice = 0
-while choice != 9:
+while choice != 6:
     displayMenu()
-    choice = int(input('>>> Enter your choice [1-9]: '))
+    choice = int(input('>>> Enter your choice [1-6]: '))
     if choice == 1:
         newCustomer(dbCon, dbCursor)
     elif choice == 2:
-        getCustomerDetails(dbCursor)
-    elif choice == 3:
-        updateCustomerDetails(dbCon, dbCursor)
-    elif choice == 4:
-        deleteCustomer(dbCon, dbCursor)
-    elif choice == 5:
         openBankAcc(dbCon, dbCursor)
-    elif choice == 6:
+    elif choice == 3:
         getAccDetails(dbCursor)
-    elif choice == 7:
+    elif choice == 4:
         deleteAcc(dbCon, dbCursor)
-    elif choice == 8:
+    elif choice == 5:
         transact(dbCon, dbCursor)
-    elif choice == 9:
+    elif choice == 6:
         print('Bye!')
         bankDb.closeDbConnection(dbCon, dbCursor)
     else:
-        print('[ERROR] Invalid choice. Select right operation.')
+        print('Invalid choice. Select right operation.')
         choice = 0
-
