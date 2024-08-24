@@ -7,6 +7,12 @@ C_C++/*.pdb
 *.obj
 C_C++/lab
 
+# For VS Code C, C++
+C_C++/.vscode
+
+# For Java
+Java/ds_algo/out
+
 # For Java Gradle
 Java/Gradle/.gradle
 Java/Gradle/.idea
