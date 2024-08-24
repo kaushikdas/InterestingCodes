@@ -1,6 +1,7 @@
 # For C or C++
 C_C++/*.exe
 C_C++/*.o
+C_C++/*.out
 C_C++/*.ilk
 C_C++/*.pdb
 *.pdb
