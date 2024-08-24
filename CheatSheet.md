@@ -102,7 +102,7 @@
 |       **_Other Operations_** | -                                                                                                      |
 |                      `a + b` | Concatenation of list `a` and list `b`                                                                 |
 |                     `v in a` | `True` if `a` contains `v`, `False` otherwise&mdash;_O_(_n_)                                           |
-|                 `for v in a` | Iterates over `a``&mdash;_O_(_n_)                                                                      |
+|                 `for v in a` | Iterates over `a`&mdash;_O_(_n_)                                                                       |
 |                 `a.index(v)` | Returns index of _first_ occurence of `v` in `a`&mdash;_O_(_n_) <br/> Raises `ValueError` if not found |
 |                `a.reverse()` | Revesres `a`&mdash;_O_(_n_)                                                                            |
 |                   `a.sort()` | Sorts `a`&mdash;_O_(_n_ log _n_)                                                                       |
@@ -122,28 +122,34 @@
 |   `a.index(v)` | Same as list                                        |
 |   `a.count(v)` | Same as list                                        |
 
+> To create a size-1 tuple, the lone element must be followed by a comma:  
+> `tuple = ('hi',)   # size-1 tuple`
+
+
 ### 3.3.3 `set`
 
-|           Operation | Description                                                                                  |
-| ------------------: | :------------------------------------------------------------------------------------------- |
-|    `set()`<br/>`{}` | Creates empty set&mdash;_O_(1)                                                               |
-|            `len(s)` | Length of set `s`&mdash;_O_(1)                                                               |
-|          `s.add(e)` | Adds item `e` to set `s`&mdash;_O_(1) (if not present already)                               |
-|       `s.remove(e)` | Removes item `e` from set `s`&mdash;_O_(1) <br/>Raises `KeyError` if the `e` is not a member |
-|            `e in s` | `True` if `s` contains `e`, `False` otherwise&mdash;_O_(1)                                   |
-|        `for e in s` | Iterate over set `s`&mdash;_O_(_n_)                                                          |
-| `s.intersection(t)` | Intersection of `s` and `t``&mdash;_O_(_n_)                                                  |
-|        `s.union(t)` | Union of `s` and `t``&mdash;_O_(_n_)                                                         |
+|                   Operation | Description                                                                                  |
+| --------------------------: | :------------------------------------------------------------------------------------------- |
+|            `set()`<br/>`{}` | Creates empty set&mdash;_O_(1)                                                               |
+|                    `len(s)` | Length of set `s`&mdash;_O_(1)                                                               |
+|                  `s.add(e)` | Adds item `e` to set `s`&mdash;_O_(1) (if not present already)                               |
+|               `s.remove(e)` | Removes item `e` from set `s`&mdash;_O_(1) <br/>Raises `KeyError` if the `e` is not a member |
+|                    `e in s` | `True` if `s` contains `e`, `False` otherwise&mdash;_O_(1)                                   |
+|                `for e in s` | Iterate over set `s`&mdash;_O_(_n_)                                                          |
+|         `s.intersection(t)` | Intersection of `s` and `t`&mdash;_O_(_n_)                                                   |
+|                `s.union(t)` | Union of `s` and `t`&mdash;_O_(_n_)                                                          |
+|           `s.difference(t)` | `s-t`&mdash;_O_(_n_)                                                                         |
+| `s.symmetric_difference(t)` | `(s ∪ t) - (s ∩ t)`&mdash;_O_(_n_)                                                           |
 
 > Elements MUST be hashable
 
 ### 3.3.4 `dictionary`
 
-|                      Operation | Description                                                                                                          |
-| -----------------------------: | :------------------------------------------------------------------------------------------------------------------- |
-|              `dict()`<br/>`{}` | Creates empty dictionary`&mdash;_O_(1)                                                                               |
-|                      `len(st)` | Length of `st`&mdash;_O_(1)                                                                                          |
-| `st = st.fromkeys(list('AB'))` | `st = {'A': None, 'B': None`&mdash;Form keys in the dict based on the input, it has to be stored in another variable |
+|                      Operation | Description                                                                                                           |
+| -----------------------------: | :-------------------------------------------------------------------------------------------------------------------- |
+|              `dict()`<br/>`{}` | Creates empty dictionary`&mdash;_O_(1)                                                                                |
+|                      `len(st)` | Length of `st`&mdash;_O_(1)                                                                                           |
+| `st = st.fromkeys(list('AB'))` | `st = {'A': None, 'B': None}`&mdash;Form keys in the dict based on the input, it has to be stored in another variable |
 d
 | `st[k]` | The values associated with key `k`&mdash;_O_(1)<br/>Raises `KeyError` if no such key |
 |                                                                                   `st.get(k)` | Gets value of key `k`&mdash;`None` if not found                                                     |
@@ -152,7 +158,7 @@ d
 |                                                                                     `k in st` | `True` if `st` contains `k`, `False` otherwise&mdash;_O_(1)                                         |
 |                                                                 `del st[k]` <br/> `st.pop(k`) | Delete key `k` and its associated value from `st`&mdash;_O_(1)<br/>Raises `KeyError` if no such key |
 |                                                                                 `for k in st` | Iterate over _keys_ in `st`&mdash;_O_(_n_)                                                          |
-|                                                                                   `st.keys()` | Keys in `st` (dict_keys(['one', 'two']))                                                            |
+|                                                                                   `st.keys()` | Keys in `st` (`dict_keys(['one', 'two']`))                                                            |
 |                                                                                 `st.values()` | Values in (`dict_values([1, 2])`)`st`                                                               |
 |                                                                                  `st.items()` | Key values paits in `st` (`dict_items([('o', 1), ('t', 2)])`)                                       |
 |                                                                                `st.update(d)` | Update `st` using dict `d`, if the key from `d` is present it gets updated, if not it gets created  |
@@ -187,7 +193,11 @@ def opener(path, flags):
     return os.open(path, flags, dir_fd=dir_fd)
 
 with open('spamspam.txt', 'w', opener=opener) as f:
-    print('This will be written to somedir/spamspam.txt', file=f)
+    print('This will be written to somedir/spamspam.txt', 
+        file=f)  # for print() file defaults to stdout 
 
 os.close(dir_fd)  # don't leak a file descriptor
+```
+```python
+f.read()
 ```
