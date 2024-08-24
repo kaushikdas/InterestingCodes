@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <math.h>
 
 /* Leibnitz
    pi = sum_i=1toINF { 4(-1)^(i + 1) / (2i - 1) } */
