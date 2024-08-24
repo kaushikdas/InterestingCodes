@@ -20,3 +20,6 @@ Python/__pycache__/
 
 # Ignore Gradle build output directory
 build
+
+# VS Code
+.vscode/*
