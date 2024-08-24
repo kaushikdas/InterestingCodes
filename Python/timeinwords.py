@@ -65,9 +65,7 @@ def timeInWords(h, m):
     elif m <= 30:
         return (numToWord(m) + minStr(m) + ' past ' + numToWord(h))
     else:
-        h += 1
-        h = 1 if h > 12 else h
-        #minStr = ' minutes' if (60-m) != 15 else ''
+        h = 1 if h+1 > 12 else h+1
         return (numToWord(60-m) + minStr(60-m) + ' to ' + numToWord(h))
 
 
@@ -89,5 +87,3 @@ if __name__ == '__main__':
         # print("{0:02d}:{1:02d} -> {2}".format(t[0], t[1], timeStr))
         print("{h:02d}:{m:02d} -> {s}"
               .format(h=t[0], m=t[1], s=timeStr))
-
-    print(timeInWords.__doc__)
