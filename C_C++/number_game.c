@@ -1,6 +1,213 @@
+// #define MAHARNAB_SLN
+
+#ifdef MAHARNAB_SLN
 #include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
+int group_numbers(int result_so_far, int idx, int string_idx, char string[]);
+int replace_minus(int result_so_far, int idx, int string_idx, char string[]);
+char get_digit(int digit);
+
+int num[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+int main()
+{
+  int c;
+  do
+  {
+    printf("Choose Option:\n");
+    printf("1) GROUP 2) REPLACEMINUS 3) Quit\n");
+    printf("Enter Option: ");
+    scanf("%d", &c);
+    char string[1000] = {'0'};
+    switch (c)
+    {
+    case 1:
+      group_numbers(0, 0, 0, string);
+      if (group_numbers(0, 0, 0, string) != 1)
+      {
+        printf("No variation exists that sums to 100\n");
+      }
+      break;
+
+    case 2:
+      replace_minus(0, 0, 0, string);
+      if (replace_minus(0, 0, 0, string) != 1)
+      {
+        printf("No variation exists that sums to 100\n");
+      }
+      break;
+
+    case 3:
+      printf("Quitting ...\n");
+      break;
+
+    default:
+      printf("Wrong input, try again\n");
+      printf("1) GROUP 2) REPLACEMINUS 3) Quit\n");
+      printf("Enter Option: ");
+      scanf("%d", &c);
+    }
+  } while (c != 3);
+  return 0;
+}
+
+char get_digit(int digit)
+{
+  if ((digit >= 1) && (digit <= 9))
+  {
+    return '1' + digit - 1;
+  }
+}
+
+int group_numbers(int result_so_far, int idx, int string_idx, char string[])
+{
+  int result_so_far_received = result_so_far;
+  int string_idx_received1 = string_idx, string_idx_received2 = string_idx, string_idx_received3 = string_idx;
+  int found1, found2, found3, found4;
+  if (idx <= 9)
+  {
+    if (idx == 9)
+    {
+      string[string_idx] = '\0';
+      if (result_so_far == 100)
+      {
+        printf("%s = 100\n", string);
+        return 1;
+      }
+      else
+        return 0;
+    }
+
+    if (idx == 0)
+    {
+      result_so_far = result_so_far_received + num[idx];
+      string[string_idx++] = get_digit(num[idx]);
+      found3 = group_numbers(result_so_far, idx + 1, string_idx, string);
+
+      result_so_far = result_so_far_received + 10 * num[idx] + num[idx + 1];
+      string[string_idx_received3++] = get_digit(num[idx]);
+      string[string_idx_received3++] = get_digit(num[idx + 1]);
+      found4 = group_numbers(result_so_far, idx + 2, string_idx_received3, string);
+    }
+
+    if (idx != 0)
+    {
+      {
+        result_so_far = result_so_far_received + num[idx];
+        string[string_idx_received1++] = ' ';
+        string[string_idx_received1++] = '+';
+        string[string_idx_received1++] = ' ';
+        string[string_idx_received1++] = get_digit(num[idx]);
+        found1 = group_numbers(result_so_far, idx + 1, string_idx_received1, string);
+      }
+      {
+        if (idx < 8)
+        {
+          result_so_far = result_so_far_received + 10 * num[idx] + num[idx + 1];
+          string[string_idx_received2++] = ' ';
+          string[string_idx_received2++] = '+';
+          string[string_idx_received2++] = ' ';
+          string[string_idx_received2++] = get_digit(num[idx]);
+          string[string_idx_received2++] = get_digit(num[idx + 1]);
+          found2 = group_numbers(result_so_far, idx + 2, string_idx_received2, string);
+        }
+      }
+    }
+    if ((found1 == 1) || (found2 == 1))
+    {
+      /* printf("%s\n", string); */
+      return 1;
+    }
+  }
+}
+
+int replace_minus(int result_so_far, int idx, int string_idx, char string[])
+{
+  int result_so_far_received = result_so_far;
+  int string_idx_received = string_idx, string_idx_received1 = string_idx, string_idx_received2 = string_idx, string_idx_received3 = string_idx, string_idx_received4 = string_idx;
+  int found1, found2, found3, found4, found5, found6;
+  if (idx <= 9)
+  {
+    if (idx == 9)
+    {
+      string[string_idx] = '\0';
+      if (result_so_far == 100)
+      {
+        printf("%s = 100\n", string);
+        return 1;
+      }
+      else
+        return 0;
+    }
+
+    {
+      if (idx == 0)
+      {
+        result_so_far = result_so_far_received + num[idx];
+        string[string_idx_received3++] = get_digit(num[idx]);
+        found5 = replace_minus(result_so_far, idx + 1, string_idx_received3, string);
+
+        result_so_far = result_so_far_received + 10 * num[idx] + num[idx + 1];
+        string[string_idx_received4++] = get_digit(num[idx]);
+        string[string_idx_received4++] = get_digit(num[idx + 1]);
+        found6 = replace_minus(result_so_far, idx + 2, string_idx_received4, string);
+      }
+
+      if (idx != 0)
+      {
+        {
+          {
+            result_so_far = result_so_far_received + num[idx];
+            string[string_idx++] = ' ';
+            string[string_idx++] = '+';
+            string[string_idx++] = ' ';
+            string[string_idx++] = get_digit(num[idx]);
+            found1 = replace_minus(result_so_far, idx + 1, string_idx, string);
+          }
+
+          {
+            result_so_far = result_so_far_received - num[idx];
+            string[string_idx_received++] = ' ';
+            string[string_idx_received++] = '-';
+            string[string_idx_received++] = ' ';
+            string[string_idx_received++] = get_digit(num[idx]);
+            found3 = replace_minus(result_so_far, idx + 1, string_idx_received, string);
+          }
+        }
+        {
+          if (idx < 8)
+          {
+            {
+              result_so_far = result_so_far_received + 10 * num[idx] + num[idx + 1];
+              string[string_idx_received1++] = ' ';
+              string[string_idx_received1++] = '+';
+              string[string_idx_received1++] = ' ';
+              string[string_idx_received1++] = get_digit(num[idx]);
+              string[string_idx_received1++] = get_digit(num[idx + 1]);
+              found2 = replace_minus(result_so_far, idx + 2, string_idx_received1, string);
+            }
+
+            {
+              result_so_far = result_so_far_received - 10 * num[idx] - num[idx + 1];
+              string[string_idx_received2++] = ' ';
+              string[string_idx_received2++] = '-';
+              string[string_idx_received2++] = ' ';
+              string[string_idx_received2++] = get_digit(num[idx]);
+              string[string_idx_received2++] = get_digit(num[idx + 1]);
+              found4 = replace_minus(result_so_far, idx + 2, string_idx_received2, string);
+            }
+          }
+        }
+      }
+      if ((found1 == 1) || (found2 == 1) || (found3 == 1) || (found4 == 1))
+      {
+        /* printf("%s\n", string); */
+        return 1;
+      }
+    }
+  }
+}
+
+#else
+#include <stdio.h>
 
 #define MAX_LEN 100
 
@@ -207,12 +414,10 @@ int replace_minus(int result_so_far, int idx, char result_str[], int write_idx)
   /* reset write_idx to received value because that is modified during
      above recursive call */
   write_idx = write_idx_received;
-  if (write_idx != 0) /* No need to write leading + for the 1st digit */
-  {
+  if (write_idx != 0) /* No leading space for the 1st -ve digit*/
     result_str[write_idx++] = ' ';
-    result_str[write_idx++] = '-';
-    result_str[write_idx++] = ' ';
-  }
+  result_str[write_idx++] = '-';
+  result_str[write_idx++] = ' ';
   result_str[write_idx++] = get_digit_char(numbers[idx]);
 
   /* reset result_so_far to received value because that is modified
@@ -302,7 +507,7 @@ Valid variations are...
 1 + 2 + 34 - 5 + 67 - 8 + 9 = 100
 1 + 23 - 4 + 5 + 6 + 78 - 9 = 100
 1 + 23 - 4 + 56 + 7 + 8 + 9 = 100
-1 + 2 - 3 + 4 + 5 + 6 + 78 + 9 = 100
+- 1 + 2 - 3 + 4 + 5 + 6 + 78 + 9 = 100
 12 + 3 + 4 + 5 - 6 - 7 + 89 = 100
 12 + 3 - 4 + 5 + 67 + 8 + 9 = 100
 12 - 3 - 4 + 5 - 6 + 7 + 89 = 100
@@ -313,3 +518,4 @@ Enter Option: 3
 Quitting
 
 */
+#endif /* MAHARNAB_SLN */
