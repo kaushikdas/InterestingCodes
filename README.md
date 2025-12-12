@@ -13,7 +13,7 @@ sort the array in ascending order.
 
 - **Sol:** Just put an element in its right position: `x` at `arr[x-1]`
 
-### 2. Sherlock and Anagrams (Medium)
+### 2. Sherlock and Anagrams (`Medium`)
 
 Two strings are anagrams of each other if the letters of one string can
 be rearranged to form the other string. Given a string, find the number
@@ -59,20 +59,20 @@ n = 10
 Queries:
 
 ```
-    a b k
-    1 5 3
-    4 8 7
-    6 9 1
+  a b k
+  1 5 3
+  4 8 7
+  6 9 1
 ```
 
 Add the values of `k` between the indices `a` and `b` inclusive:
 
 ```
-index->	 1 2 3  4  5 6 7 8 9 10
-	      [0,0,0, 0, 0,0,0,0,0, 0]
-      	[3,3,3, 3, 3,0,0,0,0, 0]
-      	[3,3,3,10,10,7,7,7,0, 0]
-	      [3,3,3,10,10,8,8,8,1, 0]
+  1  2  3  4  5  6  7  8  9  10   <- index>
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]  <- Initial list
+[ 3, 3, 3, 3, 3, 0, 0, 0, 0, 0 ]  <- After 1st operation (1, 5, 3)
+[ 3, 3, 3,10,10, 7, 7, 7, 0, 0 ]  <- After 2nd operation (4, 8, 7)
+[ 3, 3, 3,10,10, 8, 8, 8, 1, 0 ]  <- After 3rd operation (6, 9, 1)
 ```
 The largest value is `10` after all operations are performed.
 
@@ -109,6 +109,17 @@ David wants to perform some number of swap operations such that:
 - **Sol:**
   - Count the freq of each colour
   - Count the cpacity of each color
-  - Now for each box capacity check if the a color freq equal
-    to that
+  - Now for each box capacity check if exits a color freq equal to that
+    - If yes exchange
+  ```python
+  for i in range(n):  # n = colour count = box count
+    for j in range (i, n):
+      if (capacity[i] == colour[j]):
+        swap(colour[i], colour[j])
+        break
+    if (j == n):
+      print('Impossible')
+      return
+  print('Impossible')
+  ```
 
