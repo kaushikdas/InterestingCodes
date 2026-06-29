@@ -1,0 +1,72 @@
+<mxfile host="Electron">
+  <diagram name="Page-1" id="2UIaeRBevwMHx5M0tRsQ">
+    <mxGraphModel dx="1187" dy="814" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="sqcdCvRoexZfSaVL95nN-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=3;strokeColor=#B3B3B3;shadow=1;" value="" vertex="1">
+          <mxGeometry height="360" width="368" x="132" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="KbE3H5CaoFcGY1reF2vn-6" edge="1" parent="1" source="KbE3H5CaoFcGY1reF2vn-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="KbE3H5CaoFcGY1reF2vn-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KbE3H5CaoFcGY1reF2vn-7" connectable="0" parent="KbE3H5CaoFcGY1reF2vn-6" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="after result becomes available&amp;nbsp;&amp;nbsp;" vertex="1">
+          <mxGeometry relative="1" x="-0.1667" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KbE3H5CaoFcGY1reF2vn-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;" value="" vertex="1">
+          <mxGeometry height="40" width="40" x="240" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="KbE3H5CaoFcGY1reF2vn-3" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;p&gt;Future object &lt;code&gt;f1&lt;/code&gt; created using&lt;/p&gt;&lt;p&gt;&lt;code&gt;f1 = std::async(...);&lt;/code&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="50" width="170" x="175" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="KbE3H5CaoFcGY1reF2vn-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;" value="" vertex="1">
+          <mxGeometry height="40" width="40" x="240" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="KbE3H5CaoFcGY1reF2vn-5" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#f8cecc;strokeColor=#b85450;" value="" vertex="1">
+          <mxGeometry height="16" width="16" x="252" y="332" as="geometry" />
+        </mxCell>
+        <mxCell id="KbE3H5CaoFcGY1reF2vn-8" parent="1" style="text;whiteSpace=wrap;html=1;" value="&lt;span data-whi-clipboard=&quot;{:hiccup [[:p [:code &amp;quot;f1&amp;quot;]]], :file-id #uuid &amp;quot;61533273-af33-460a-a011-3db77fab7772&amp;quot;}&quot;&gt;&lt;/span&gt;&lt;code&gt;f1&lt;/code&gt;" vertex="1">
+          <mxGeometry height="30" width="20" x="210" y="325" as="geometry" />
+        </mxCell>
+        <mxCell id="KbE3H5CaoFcGY1reF2vn-10" edge="1" parent="1" source="KbE3H5CaoFcGY1reF2vn-9" style="rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fillColor=#f5f5f5;strokeColor=#666666;" target="KbE3H5CaoFcGY1reF2vn-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KbE3H5CaoFcGY1reF2vn-9" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="result" vertex="1">
+          <mxGeometry height="30" width="60" x="310" y="318" as="geometry" />
+        </mxCell>
+        <mxCell id="KbE3H5CaoFcGY1reF2vn-11" parent="1" style="text;whiteSpace=wrap;html=1;" value="&lt;span data-whi-clipboard=&quot;{:hiccup [[:p [:code &amp;quot;.get()&amp;quot;] &amp;quot; &amp;quot;] [:p [:i &amp;quot;invalidates and releases&amp;quot;] &amp;quot; &amp;quot; [:code &amp;quot;f1&amp;quot;] &amp;quot;’s internal shared state&amp;quot;]], :file-id #uuid &amp;quot;2eafce83-ee44-4de8-bf7c-4acfaf9ae4d7&amp;quot;}&quot;&gt;&lt;/span&gt;&lt;p&gt;&lt;code&gt;.get()&lt;/code&gt; &lt;/p&gt;&lt;p&gt;&lt;i&gt;invalidates and releases&lt;/i&gt; &lt;code&gt;f1&lt;/code&gt;’s internal shared state&lt;/p&gt;" vertex="1">
+          <mxGeometry height="90" width="160" x="280" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="KbE3H5CaoFcGY1reF2vn-12" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;" value="" vertex="1">
+          <mxGeometry height="40" width="40" x="180" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="KbE3H5CaoFcGY1reF2vn-13" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#f8cecc;strokeColor=#b85450;" value="" vertex="1">
+          <mxGeometry height="16" width="16" x="294" y="452" as="geometry" />
+        </mxCell>
+        <mxCell id="KbE3H5CaoFcGY1reF2vn-14" edge="1" parent="1" source="KbE3H5CaoFcGY1reF2vn-16" style="endArrow=block;html=1;rounded=0;endFill=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="KbE3H5CaoFcGY1reF2vn-13" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="390" y="480" as="sourcePoint" />
+            <mxPoint x="440" y="430" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KbE3H5CaoFcGY1reF2vn-16" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=none;strokeColor=#808080;dashed=1;" value="" vertex="1">
+          <mxGeometry height="16" width="16" x="192" y="452" as="geometry" />
+        </mxCell>
+        <mxCell id="KbE3H5CaoFcGY1reF2vn-17" edge="1" parent="1" source="KbE3H5CaoFcGY1reF2vn-4" style="endArrow=block;html=1;rounded=0;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="218" y="470" as="sourcePoint" />
+            <mxPoint x="260" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KbE3H5CaoFcGY1reF2vn-18" parent="1" style="text;whiteSpace=wrap;html=1;" value="&lt;span data-whi-clipboard=&quot;{:hiccup [[:p [:code &amp;quot;f1&amp;quot;]]], :file-id #uuid &amp;quot;61533273-af33-460a-a011-3db77fab7772&amp;quot;}&quot;&gt;&lt;/span&gt;&lt;code&gt;f1&lt;/code&gt;" vertex="1">
+          <mxGeometry height="30" width="20" x="155" y="445" as="geometry" />
+        </mxCell>
+        <mxCell id="KbE3H5CaoFcGY1reF2vn-19" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="Thread calling&amp;nbsp;&lt;span style=&quot;font-family: monospace;&quot;&gt;.get()&lt;/span&gt;&amp;nbsp;steals the result due to&amp;nbsp;&lt;span style=&quot;font-family: monospace;&quot;&gt;move&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="160" x="320" y="445" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
