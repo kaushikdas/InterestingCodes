@@ -1,9 +1,12 @@
 <mxfile host="Electron">
   <diagram name="Page-1" id="2UIaeRBevwMHx5M0tRsQ">
-    <mxGraphModel dx="1130" dy="775" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="1" shadow="0">
+    <mxGraphModel dx="989" dy="678" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="1" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="qRBLt46ThRu0Fjg32bZc-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=3;strokeColor=#B3B3B3;shadow=1;" value="" vertex="1">
+          <mxGeometry height="430" width="539" x="135" y="4690" as="geometry" />
+        </mxCell>
         <mxCell id="kbD0rkrYYa7Xiic7GQ5k-215" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=3;strokeColor=#B3B3B3;shadow=1;" value="" vertex="1">
           <mxGeometry height="280" width="638" x="132" y="1980" as="geometry" />
         </mxCell>
@@ -1550,9 +1553,6 @@
         <mxCell id="UK0iK4LyeJvx5WzF4k1_-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=3;strokeColor=#B3B3B3;shadow=1;" value="" vertex="1">
           <mxGeometry height="558" width="539" x="131" y="4092" as="geometry" />
         </mxCell>
-        <mxCell id="UK0iK4LyeJvx5WzF4k1_-7" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;div&gt;&lt;font face=&quot;Lucida Console&quot;&gt;// create a shared pointer &lt;b&gt;sp1&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;span class=&quot;mtk1&quot; style=&quot;font-family: &amp;quot;Lucida Console&amp;quot;; background-color: rgb(255, 255, 255);&quot;&gt;std::shared_ptr&amp;lt;&lt;/span&gt;&lt;span class=&quot;mtk6&quot; style=&quot;font-family: &amp;quot;Lucida Console&amp;quot;; background-color: rgb(255, 255, 255);&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;mtk1&quot; style=&quot;font-family: &amp;quot;Lucida Console&amp;quot;; background-color: rgb(255, 255, 255);&quot;&gt;&amp;gt; sp1(&lt;/span&gt;&lt;span class=&quot;mtk6&quot; style=&quot;font-family: &amp;quot;Lucida Console&amp;quot;; background-color: rgb(255, 255, 255);&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;mtk1&quot; style=&quot;font-family: &amp;quot;Lucida Console&amp;quot;; background-color: rgb(255, 255, 255);&quot;&gt; MyClass&lt;/span&gt;&lt;span class=&quot;mtk1&quot; style=&quot;font-family: &amp;quot;Lucida Console&amp;quot;; background-color: rgb(255, 255, 255);&quot;&gt;);&lt;/span&gt;" vertex="1">
-          <mxGeometry height="30" width="285" x="870" y="4190" as="geometry" />
-        </mxCell>
         <mxCell id="UK0iK4LyeJvx5WzF4k1_-11" edge="1" parent="1" source="UK0iK4LyeJvx5WzF4k1_-12" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=classicThin;endFill=1;curved=0;strokeWidth=2;" target="UK0iK4LyeJvx5WzF4k1_-23">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="210.25" y="4375.5" as="targetPoint" />
@@ -1696,6 +1696,114 @@
         </mxCell>
         <mxCell id="UK0iK4LyeJvx5WzF4k1_-60" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="After executing&amp;nbsp;&lt;div&gt;&lt;font face=&quot;Lucida Console&quot;&gt;sp2 = &lt;b&gt;p&lt;/b&gt;-&amp;gt;shared_from_this();&lt;/font&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="30" width="241" x="153.75" y="4470" as="geometry" />
+        </mxCell>
+        <mxCell id="qRBLt46ThRu0Fjg32bZc-38" parent="1" style="shape=label;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;rounded=1;labelPosition=center;verticalLabelPosition=bottom;align=center;verticalAlign=top;" value="&lt;font face=&quot;Lucida Console&quot;&gt;Widget&lt;/font&gt; object" vertex="1">
+          <mxGeometry height="90" width="76" x="411.75" y="4770" as="geometry" />
+        </mxCell>
+        <mxCell id="qRBLt46ThRu0Fjg32bZc-39" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="420.75" y="4807.52" as="sourcePoint" />
+            <mxPoint x="480.75" y="4807.52" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qRBLt46ThRu0Fjg32bZc-40" parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;rounded=0;" value="" vertex="1">
+          <mxGeometry height="16" width="16" x="441.5" y="4780" as="geometry" />
+        </mxCell>
+        <mxCell id="qRBLt46ThRu0Fjg32bZc-41" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;fillColor=#647687;fontColor=#ffffff;strokeColor=#314354;" value="" vertex="1">
+          <mxGeometry height="4" width="45" x="426.25" y="4820" as="geometry" />
+        </mxCell>
+        <mxCell id="qRBLt46ThRu0Fjg32bZc-42" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;fillColor=#647687;fontColor=#ffffff;strokeColor=#314354;" value="" vertex="1">
+          <mxGeometry height="4" width="45" x="426.25" y="4830" as="geometry" />
+        </mxCell>
+        <mxCell id="qRBLt46ThRu0Fjg32bZc-43" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;fillColor=#647687;fontColor=#ffffff;strokeColor=#314354;" value="" vertex="1">
+          <mxGeometry height="4" width="45" x="426.25" y="4840" as="geometry" />
+        </mxCell>
+        <mxCell id="qRBLt46ThRu0Fjg32bZc-45" edge="1" parent="1" source="qRBLt46ThRu0Fjg32bZc-40" style="endArrow=openAsync;html=1;rounded=0;curved=1;startArrow=openAsync;startFill=0;endFill=0;strokeColor=#999999;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="qRBLt46ThRu0Fjg32bZc-46" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="404.5" y="4770" />
+            </Array>
+            <mxPoint x="592.75" y="4673" as="sourcePoint" />
+            <mxPoint x="367.25" y="4777.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qRBLt46ThRu0Fjg32bZc-46" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-family: &amp;quot;Lucida Console&amp;quot;;&quot;&gt;new Widget&lt;/span&gt;&lt;span class=&quot;T286Pc&quot; data-sfc-cp=&quot;&quot; data-sfc-root=&quot;ep&quot; data-sfc-cb=&quot;&quot; data-processed=&quot;true&quot; data-copy-service-computed-style=&quot;font-family: &amp;quot;Google Sans&amp;quot;, Arial, sans-serif; font-size: 16px; font-weight: 400; margin: 0px; text-decoration: none; border-bottom: 0px rgb(10, 10, 10);&quot; style=&quot;margin: 0px; border-bottom: 0px rgb(10, 10, 10);&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;div&gt;&lt;span class=&quot;T286Pc&quot; data-sfc-cp=&quot;&quot; data-sfc-root=&quot;ep&quot; data-sfc-cb=&quot;&quot; data-processed=&quot;true&quot; data-copy-service-computed-style=&quot;font-family: &amp;quot;Google Sans&amp;quot;, Arial, sans-serif; font-size: 16px; font-weight: 400; margin: 0px; text-decoration: none; border-bottom: 0px rgb(10, 10, 10);&quot; style=&quot;margin: 0px; border-bottom: 0px rgb(10, 10, 10);&quot;&gt;reserves memory space for the hidden &lt;font face=&quot;Lucida Console&quot;&gt;weak_ptr&lt;/font&gt; member &lt;font face=&quot;Lucida Console&quot;&gt;self&lt;/font&gt; inside the &lt;font face=&quot;Lucida Console&quot;&gt;Widget&lt;/font&gt;&lt;/span&gt;&amp;nbsp;object.&lt;/div&gt;" vertex="1">
+          <mxGeometry height="70" width="200" x="175.25" y="4740" as="geometry" />
+        </mxCell>
+        <mxCell id="qRBLt46ThRu0Fjg32bZc-48" parent="1" style="shape=label;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;rounded=1;labelPosition=center;verticalLabelPosition=bottom;align=center;verticalAlign=top;" value="&lt;font face=&quot;Lucida Console&quot;&gt;Widget&lt;/font&gt; object" vertex="1">
+          <mxGeometry height="90" width="76" x="245" y="4988" as="geometry" />
+        </mxCell>
+        <mxCell id="qRBLt46ThRu0Fjg32bZc-49" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="254" y="5025.52" as="sourcePoint" />
+            <mxPoint x="314" y="5025.52" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qRBLt46ThRu0Fjg32bZc-91" edge="1" parent="1" source="qRBLt46ThRu0Fjg32bZc-50" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.75;exitDx=0;exitDy=0;strokeColor=#666666;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=open;endFill=0;curved=0;fillColor=#f5f5f5;" target="qRBLt46ThRu0Fjg32bZc-48">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="340.75" y="5010" />
+              <mxPoint x="340.75" y="5033" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qRBLt46ThRu0Fjg32bZc-92" edge="1" parent="1" source="qRBLt46ThRu0Fjg32bZc-50" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.25;exitDx=0;exitDy=0;strokeColor=#666666;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=open;endFill=0;curved=0;fillColor=#f5f5f5;" target="qRBLt46ThRu0Fjg32bZc-84">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="340.75" y="5002" />
+              <mxPoint x="340.75" y="4954" />
+              <mxPoint x="295.75" y="4954" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qRBLt46ThRu0Fjg32bZc-50" parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;rounded=0;fillColor=#CCCCCC;fontColor=#333333;strokeColor=#666666;" value="" vertex="1">
+          <mxGeometry height="16" width="16" x="274.75" y="4998" as="geometry" />
+        </mxCell>
+        <mxCell id="qRBLt46ThRu0Fjg32bZc-51" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;fillColor=#647687;fontColor=#ffffff;strokeColor=#314354;" value="" vertex="1">
+          <mxGeometry height="4" width="45" x="259.5" y="5038" as="geometry" />
+        </mxCell>
+        <mxCell id="qRBLt46ThRu0Fjg32bZc-52" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;fillColor=#647687;fontColor=#ffffff;strokeColor=#314354;" value="" vertex="1">
+          <mxGeometry height="4" width="45" x="259.5" y="5048" as="geometry" />
+        </mxCell>
+        <mxCell id="qRBLt46ThRu0Fjg32bZc-53" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;fillColor=#647687;fontColor=#ffffff;strokeColor=#314354;" value="" vertex="1">
+          <mxGeometry height="4" width="45" x="259.5" y="5058" as="geometry" />
+        </mxCell>
+        <mxCell id="qRBLt46ThRu0Fjg32bZc-70" parent="1" style="text;whiteSpace=wrap;html=1;labelBackgroundColor=none;" value="&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;&lt;b style=&quot;&quot;&gt;&lt;font face=&quot;Lucida Console&quot;&gt;sp1&lt;/font&gt;&lt;/b&gt;&lt;/span&gt;" vertex="1">
+          <mxGeometry height="22" width="21" x="145.75" y="4994" as="geometry" />
+        </mxCell>
+        <mxCell id="qRBLt46ThRu0Fjg32bZc-71" parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#f8cecc;strokeColor=#b85450;rounded=0;" value="" vertex="1">
+          <mxGeometry height="16" width="16" x="171.5" y="5000" as="geometry" />
+        </mxCell>
+        <mxCell id="qRBLt46ThRu0Fjg32bZc-73" edge="1" parent="1" source="qRBLt46ThRu0Fjg32bZc-71" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;curved=0;endArrow=classicThin;endFill=1;strokeWidth=2;exitX=1;exitY=0.25;exitDx=0;exitDy=0;" target="qRBLt46ThRu0Fjg32bZc-84">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="168.5" y="4886" as="sourcePoint" />
+            <mxPoint x="242.5" y="4992.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qRBLt46ThRu0Fjg32bZc-74" edge="1" parent="1" source="qRBLt46ThRu0Fjg32bZc-71" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;curved=0;endArrow=classicThin;endFill=1;strokeWidth=2;exitX=1;exitY=0.75;exitDx=0;exitDy=0;" target="qRBLt46ThRu0Fjg32bZc-48">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="213.75" y="5012" />
+              <mxPoint x="213.75" y="5033" />
+            </Array>
+            <mxPoint x="162.5" y="5006" as="sourcePoint" />
+            <mxPoint x="244.5" y="5030" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qRBLt46ThRu0Fjg32bZc-83" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="29" width="51" x="244.75" y="4940" as="geometry" />
+        </mxCell>
+        <mxCell id="qRBLt46ThRu0Fjg32bZc-84" parent="qRBLt46ThRu0Fjg32bZc-83" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;align=left;arcSize=37;verticalAlign=middle;" value="&lt;font face=&quot;Lucida Console&quot;&gt;RC&lt;/font&gt;" vertex="1">
+          <mxGeometry height="29" width="51" as="geometry" />
+        </mxCell>
+        <mxCell id="qRBLt46ThRu0Fjg32bZc-85" parent="qRBLt46ThRu0Fjg32bZc-83" style="strokeWidth=1;html=1;shadow=0;dashed=0;shape=mxgraph.ios.iTextInput;strokeColor=#444444;buttonText=;fontSize=8;whiteSpace=wrap;align=center;" value="&lt;font face=&quot;Lucida Console&quot; style=&quot;font-size: 10px;&quot;&gt;1&lt;/font&gt;" vertex="1">
+          <mxGeometry height="14.5" width="20" x="25" y="7.25" as="geometry" />
+        </mxCell>
+        <mxCell id="qRBLt46ThRu0Fjg32bZc-94" parent="1" style="text;whiteSpace=wrap;html=1;" value="&lt;span style=&quot;color: rgb(0, 0, 0); font-family: &amp;quot;Lucida Console&amp;quot;; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(236, 236, 236); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;&quot;&gt;std::shared_ptr&amp;lt;Widget&amp;gt; sp1(new Widget);&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="303" x="246.25" y="4700" as="geometry" />
+        </mxCell>
+        <mxCell id="qRBLt46ThRu0Fjg32bZc-95" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;background-color: light-dark(#ffffff, var(--ge-dark-color, #121212));&quot;&gt;&lt;span style=&quot;font-family: &amp;quot;Lucida Console&amp;quot;;&quot;&gt;shared_ptr&lt;/span&gt;&lt;span class=&quot;T286Pc&quot; data-sfc-cp=&quot;&quot; data-sfc-root=&quot;ep&quot; data-sfc-cb=&quot;&quot; data-processed=&quot;true&quot; data-copy-service-computed-style=&quot;font-family: &amp;quot;Google Sans&amp;quot;, Arial, sans-serif; font-size: 16px; font-weight: 400; margin: 0px; text-decoration: none; border-bottom: 0px rgb(10, 10, 10);&quot; style=&quot;margin: 0px; border-bottom: 0px rgb(10, 10, 10);&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;T286Pc&quot; data-sfc-cp=&quot;&quot; data-sfc-root=&quot;ep&quot; data-sfc-cb=&quot;&quot; data-processed=&quot;true&quot; data-copy-service-computed-style=&quot;font-family: &amp;quot;Google Sans&amp;quot;, Arial, sans-serif; font-size: 16px; font-weight: 400; margin: 0px; text-decoration: none; border-bottom: 0px rgb(10, 10, 10);&quot; style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); margin: 0px; border-bottom: 0px rgb(10, 10, 10);&quot;&gt;&lt;b&gt;constructor&lt;/b&gt; makes &lt;font face=&quot;Lucida Console&quot;&gt;sp1&lt;/font&gt; to point to the Widget object, sets the RC and&lt;font face=&quot;Helvetica&quot;&gt;&amp;nbsp;&lt;/font&gt;&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); font-variant-ligatures: no-common-ligatures;&quot;&gt;detecting the presence of an unambiguous and accessible (i.e. public) &lt;font face=&quot;Lucida Console&quot;&gt;enable_shared_from_this&lt;/font&gt;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); font-variant-ligatures: no-common-ligatures;&quot;&gt;base and assign the newly created &lt;/span&gt;&lt;span class=&quot;t-lc&quot; style=&quot;background-color: rgb(255, 255, 255); color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); font-variant-ligatures: no-common-ligatures;&quot;&gt;&lt;font face=&quot;Lucida Console&quot;&gt;std::shared_ptr&lt;/font&gt;&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); font-variant-ligatures: no-common-ligatures;&quot;&gt; to &lt;/span&gt;&lt;font face=&quot;Lucida Console&quot;&gt;&lt;code style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 0px; padding: 0px; font-variant-ligatures: no-common-ligatures; white-space: pre;&quot;&gt;&lt;i style=&quot;&quot;&gt;self&lt;/i&gt;&lt;/code&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); font-variant-ligatures: no-common-ligatures;&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;/font&gt;&lt;div&gt;&lt;font&gt;&lt;span style=&quot;color: rgb(128, 128, 128); background-color: rgb(255, 255, 255); font-variant-ligatures: no-common-ligatures;&quot;&gt;(if not already owned by a live &lt;/span&gt;&lt;span class=&quot;t-lc&quot; style=&quot;color: rgb(128, 128, 128); background-color: rgb(255, 255, 255); font-variant-ligatures: no-common-ligatures;&quot;&gt;&lt;font face=&quot;Lucida Console&quot;&gt;std::shared_ptr&lt;/font&gt;&lt;/span&gt;&lt;span style=&quot;color: rgb(128, 128, 128); background-color: rgb(255, 255, 255); font-variant-ligatures: no-common-ligatures;&quot;&gt;. Constructing a &lt;/span&gt;&lt;span class=&quot;t-lc&quot; style=&quot;color: rgb(128, 128, 128); background-color: rgb(255, 255, 255); font-variant-ligatures: no-common-ligatures;&quot;&gt;&lt;font face=&quot;Lucida Console&quot;&gt;std::shared_ptr&lt;/font&gt;&lt;/span&gt;&lt;span style=&quot;color: rgb(128, 128, 128); background-color: rgb(255, 255, 255); font-variant-ligatures: no-common-ligatures;&quot;&gt; for an object that is already managed by another &lt;/span&gt;&lt;span class=&quot;t-lc&quot; style=&quot;color: rgb(128, 128, 128); background-color: rgb(255, 255, 255); font-variant-ligatures: no-common-ligatures;&quot;&gt;&lt;font face=&quot;Lucida Console&quot;&gt;std::shared_ptr&lt;/font&gt;&lt;/span&gt;&lt;span style=&quot;color: rgb(128, 128, 128); background-color: rgb(255, 255, 255); font-variant-ligatures: no-common-ligatures;&quot;&gt; will not update or share ownership with&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;font-variant-ligatures: no-common-ligatures;&quot;&gt;&lt;span&gt;&lt;font style=&quot;color: rgb(128, 128, 128);&quot;&gt;&lt;code style=&quot;border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 0px; padding: 0px; white-space: pre;&quot;&gt;&lt;i style=&quot;&quot;&gt;self&lt;/i&gt;&lt;/code&gt;&lt;/font&gt;&lt;/span&gt;&lt;span style=&quot;color: rgb(128, 128, 128); background-color: rgb(255, 255, 255);&quot;&gt;&amp;nbsp;and so will lead to undefined behavior.)&lt;/span&gt;&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="170" width="295.25" x="363.5" y="4923" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
