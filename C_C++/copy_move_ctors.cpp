@@ -1,4 +1,5 @@
 #include <iostream>
+#include <utility>                                    // for move
 
 using std::cout;
 using std::move;
