@@ -422,3 +422,13 @@ Python/__pycache__/
 
 # Ignore Gradle build output directory
 build
+tex/report_m/final_internship_report_2026.aux
+tex/report_m/final_internship_report_2026.lof
+tex/report_m/final_internship_report_2026.lot
+tex/report_m/final_internship_report_2026.out
+tex/report_m/final_internship_report_2026.toc
+tex/report_m/final_internship_report_2026.synctex.gz
+tex/report_m/final_internship_report_2026.bbl
+tex/report_m/final_internship_report_2026.blg
+tex/report_m/final_internship_report_2026.fdb_latexmk
+tex/report_m/final_internship_report_2026.fls
