@@ -56,7 +56,7 @@
 \fancyhead[L]{\small\parbox[t]{0.72\headwidth}
               {\raggedright\nouppercase{\leftmark}}}
 % \fancyhead[R]{\small IISc CPS Dept.}
-\fancyhead[R]{\small Maharnab Das, IIT Kharagpur}
+\fancyhead[R]{\tiny Maharnab Das, CSE, IIT KGP}
 \fancyfoot[C]{\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
 
@@ -155,7 +155,7 @@
   urlcolor   = blue!70!black,
   pdftitle   = {Stabilizing Constrained Diffusion Execution Pipelines
                 for Continuous Robotic Navigation},
-  pdfauthor  = {[YOUR NAME]},
+  pdfauthor  = {Maharnab Das},
 }
 \usepackage{cleveref}
 
@@ -189,6 +189,8 @@
 
 % ============================================================
 \begin{document}
+
+\def\Call#1#2{#1(#2)}
 
 % ── Title Page ──────────────────────────────────────────────
 \begin{titlepage}
@@ -728,14 +730,29 @@ Obstacles are axis-aligned walls; a minimum clearance of
 $r_{\mathrm{obs}} = 0.50$ from any wall boundary is enforced
 throughout. An episode is deemed successful if the robot reaches
 within $\delta_{\mathrm{goal}} = 0.50$ of the goal position within a
-budget of 1000 environment steps. All experiments use the fixed
-start--goal pair $s_0 = (x_0, y_0) = (1.05, 5.92)$ and
-$s_g = (x_g, y_g) = (7, 9)$, with geodesic path length
-$L_{\mathrm{phys}} \approx 6.70$\,units. At $T = 384$, the required
-mean displacement is $\bar{d} = L_{\mathrm{phys}}/T \approx 0.017$,
-which falls below the minimum representable step size
-$d_{\min} = 0.035$, confirming that the distance-burning condition
-analysed in Section~\ref{sec:fm3} is active for this configuration.
+budget of 1000 environment steps. The failure-mode diagnosis in
+Chapter~\ref{chap:failures} uses a single fixed start--goal pair,
+$s_0 = (x_0, y_0) = (1.05, 5.92)$ and
+$s_g = (x_g, y_g) = (7, 9)$, chosen to isolate and characterise
+each failure mode in detail; the architecture benchmark in
+Chapter~\ref{chap:results} instead evaluates across the full
+$n=15$-pair set (Section~\ref{sec:eval}). For the fixed diagnostic
+pair, the geodesic (wall-respecting) path length,
+$L_{\mathrm{phys}} \approx 12.98$\,units, was computed via an A*
+shortest-path search over the extracted maze grid, which routes
+around the corridor walls between $s_0$ and $s_g$.\footnote{The
+straight-line (Euclidean) distance between $s_0$ and $s_g$ is
+$\approx 6.70$\,units, but this line clips through several maze
+walls, confirmed via raycast, so it is not physically traversable
+and serves only as a theoretical lower bound. The A* geodesic
+distance of $12.98$\,units is the value used throughout this
+report.} At $T = 384$, the required mean displacement is
+$\bar{d} = L_{\mathrm{phys}}/T \approx 0.0338$, which falls just
+below the minimum representable step size $d_{\min} = 0.035$
+(a margin of $\approx 3.4\%$), confirming that the distance-burning
+condition analysed in Section~\ref{sec:fm3} is active for this
+configuration, albeit closer to the threshold than a coarser
+straight-line estimate would suggest.
 The offline dataset~\citep{fu2020d4rl} consists of trajectory
 segments collected by a scripted controller navigating random
 start--goal pairs, and contains no explicit constraint-violation
@@ -743,11 +760,12 @@ labels.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.7\textwidth]{plots/comparison_plot.png}
-  \caption{The \texttt{maze2d-large-v1} environment, with rollouts
-    from all three architectures overlaid. PG-CD (green) maintains
-    tight, constraint-respecting curvature throughout, while UCD
-    (blue) intersects the obstacle boundary.}
+  \includegraphics[width=0.7\textwidth]{plots/intro_ucd_failure.png}
+  \caption{The \texttt{maze2d-large-v1} environment, showing a typical
+    unconstrained baseline rollout (UCD). The trajectory (fading from
+    blue to red over time) fails to respect the geometry and
+    intersects the maze walls, motivating the need for constrained
+    decoding.}
   \label{fig:env_overview}
 \end{figure}
 
@@ -893,6 +911,7 @@ EMA smoothing (Fix~2, Section~\ref{sec:fm2}).
 
 All experiments were conducted in Python using the
 \texttt{D4RL}~\citep{fu2020d4rl} environment suite and the
+PyTorch~\citep{paszke2019pytorch} deep learning framework.
 The IDM $f_\phi$ was trained offline, fully decoupled from the generative model. It is implemented as a five-layer Multi-Layer Perceptron (four hidden layers of width~512 with Mish activations~\citep{misra2019mish}, followed by a linear output layer). It maps concatenated consecutive observations $(s_t,\, s_{t+1}) \in \R^{4+4} = \R^8$ to a continuous action $a_t \in \R^2$. The model was trained on state--action pairs from the offline dataset using the AdamW optimiser~\citep{kingma2014adam,loshchilov2019adamw} (learning rate $10^{-3}$, weight decay $10^{-4}$, default betas $0.9$/$0.999$) and a \texttt{ReduceLROnPlateau} scheduler (factor $0.5$, patience $5$) minimising Mean Squared Error (MSE). The offline dataset was aggressively subsampled (retaining every $10^{\mathrm{th}}$ transition) and subjected to a $95\%$/$5\%$ random train/validation split. Training proceeded with a batch size of $2048$, incorporating early stopping on the validation loss (patience $5$, maximum $10$ epochs). Input observations are normalised to $[-1,1]$ via the \texttt{LimitsNormalizer} shared with the diffusion model; actions
 are left in their raw environment scale. Local path curvature at
 waypoint $w_i$ is approximated from three equally spaced samples. While formal discrete curvature is often defined via the Menger curvature $c(x,y,z) = 4A / (|x-y||y-z||z-x|)$ (where $A$ is the enclosed triangle area), we employ a computationally cheaper, monotonic proxy: the cosine of the inter-chord angle:
@@ -1018,7 +1037,7 @@ Empirically, $\epsilon_{\mathrm{track}}$ was measured at $0.10$
 across the frequent stall events observed at $\dlookahead = 0.10$, with
 $r_{\mathrm{obs}} = 0.50$. The feasibility interval is therefore
 $(0.10,\, 0.50)$. The \textbf{geometric mean} of the interval
-endpoints provides the natural central value that maximises the
+endpoints provides the natural central value that equalises the
 relative margin to both boundaries:
 
 \begin{equation}
@@ -1093,8 +1112,19 @@ $\omega \in [0, \pi]$ is
   \right) < 0,
   \label{eq:phase_lag}
 \end{equation}
-which is uniformly negative (phase-lagging) and attains its maximum
-magnitude near $\omega = \pi/2$.
+which is uniformly negative (phase-lagging). Setting
+$\mathrm{d}\phi/\mathrm{d}\omega = 0$ shows that $|\phi(\omega)|$
+attains its maximum \emph{exactly} at
+\begin{equation}
+  \omega^\star = \arccos(1-\alpha),
+  \label{eq:omega_star}
+\end{equation}
+where the peak phase lag has the closed form
+$\phi(\omega^\star) = -\arcsin(1-\alpha)$. In the baseline
+configuration used in Stages~1--2 of the benchmark
+(Section~\ref{sec:benchmark}), $\alpha = 0.5$, giving
+$\omega^\star = \arccos(0.5) = \pi/3$ and a maximum phase lag of
+$\phi(\omega^\star) = -\arcsin(0.5) = -30.0^\circ$.
 
 \begin{insightbox}
 The EMA filter was placed \emph{inside} the feedback loop, between
@@ -1163,7 +1193,7 @@ The diffusion model introduced artificial loops and retraced
 segments into every generated path. The physical start-to-goal
 geodesic was shorter than the temporal budget implied by the
 $T{=}384$ horizon, causing the score function to ``burn'' the
-residual distance through path extension. Across the 15-pair evaluation set, we empirically observe that this distance burning results in execution path lengths up to $10\times$ longer than the simplified path (e.g., requiring 521 steps versus 52 steps on Pair 2 before loop removal).\\[4pt]
+residual distance through path extension. Across the 15-pair evaluation set, we empirically observe that this distance burning results in execution path lengths up to $10\times$ longer than the DP-simplified reference path (e.g., $521$ raw execution steps against a $52$-step simplified reference on Pair 2, prior to loop removal). This illustrates the severity of the looping artefact in isolation; DP shortening removes the artificial loop itself, but does not guarantee overall episode success---Pair 2 (P02) is in fact one of the six pairs that still times out under the full Stage-4 pipeline (Appendix~\ref{app:pairwise}, Section~\ref{sec:fm3_topology}), indicating a further, topology-triggered obstruction independent of the loop-generation mechanism addressed here.\\[4pt]
 \textbf{Symptom B (PD-CD only):}
 The dynamic Lagrangian multipliers $\lambda^{(k)}$ diverged during
 denoising, reversing the latent trajectory gradient and
@@ -1199,7 +1229,13 @@ inter-waypoint displacement
 If $\bar{d} < d_{\mathrm{min}}$, the minimum step size below which
 the score function cannot represent a monotone advance, the
 denoising process cannot distribute $T$ waypoints monotonically
-along the geodesic. It instead generates a \textbf{non-monotone
+along the geodesic. $d_{\mathrm{min}}$ is an empirical quantity:
+it was measured as the median single-step displacement across all
+recorded trajectories in the \texttt{maze2d-large-v1} offline
+dataset~\citep{fu2020d4rl} ($d_{\mathrm{min}} = 0.035$), and is
+interpreted as the physical speed limit of the environment per
+timestep, as reflected in the training data. Below this threshold,
+the denoising process instead generates a \textbf{non-monotone
 manifold}: a path that revisits positions in order to consume the
 excess temporal budget. This behaviour is not a model failure in
 the conventional sense, but a \textbf{structural inductive bias} of
@@ -1308,14 +1344,14 @@ Experiments were conducted to validate (i) each fix individually,
 and (ii) the full stabilised pipeline across all three
 architectures. All experiments were run on a single NVIDIA
 GeForce~RTX~4090 GPU with an Intel Core~i9-12900K CPU, using batch
-size~1 (single-episode inference). The final benchmark evaluates
-each architecture over $n = 3$ episodes, with fixed start position
-$(x_0, y_0) = (1.05,\, 5.92)$ and goal $(x_g, y_g) = (7,\, 9)$, so
-as to ensure direct comparability across architectures. The
-progressive ablation reported in Section~\ref{sec:benchmark}
-uses an evaluation set of $n = 15$ diverse start--goal pairs, stratified to
-include both short hallways and challenging cross-maze trajectories (such as Pair 2).
-The metrics reported are defined formally in Table~\ref{tab:metrics}.
+size~1 (single-episode inference). Both the progressive ablation
+and the final architecture benchmark reported in
+Section~\ref{sec:benchmark} use the same evaluation set of
+$n = 15$ diverse start--goal pairs, stratified to include both
+short hallways and challenging cross-maze trajectories (such as
+Pair 2), so as to ensure direct comparability across architectures
+and pipeline stages. The metrics reported are defined formally in
+Table~\ref{tab:metrics}.
 
 \begin{table}[H]
 \centering
@@ -1353,9 +1389,15 @@ of the progressive stabilisation pipeline.
 \begin{table}[H]
 \centering
 \caption{Progressive ablation: success rate and execution
-  steps under incremental application of fixes.
-  ``---'' denotes episodes that did not terminate
-  (step budget exhausted).}
+  steps under incremental application of fixes, across all three
+  architectures and all four pipeline stages.
+  \textbf{Steps} is averaged over successful episodes only
+  (undefined for an episode that never reaches the goal).
+  \textbf{Avg.\ Violations} is averaged over \emph{all} episodes,
+  including timeouts, since wall contact accrues over an episode's
+  full duration regardless of whether the goal is eventually
+  reached. See Appendix~\ref{app:pairwise} for the per-pair data
+  underlying both conventions.}
 \label{tab:ablation_progressive}
 \begin{tabular}{@{}llccc@{}}
 \toprule
@@ -1363,8 +1405,15 @@ of the progressive stabilisation pipeline.
 \textbf{Success (\%)} & \textbf{Steps} &
 \textbf{Avg.\ Violations} \\
 \midrule
-UCD   & Full Pipeline     & 60.0  & 279.4 & 419.8 \\
-PD-CD & Full Pipeline     & 60.0  & 279.4 & 419.3 \\
+UCD   & No fixes (Stage 1)  & 46.7  & 413.4 & 423.8 \\
+UCD   & Fix~1 only (Stage 2)& 53.3  & 469.3 & 502.5 \\
+UCD   & Fix~1+2 (Stage 3)   & 53.3  & 447.0 & 493.2 \\
+UCD   & Fix~1+2+3 (Stage 4) & 60.0  & 279.4 & 419.8 \\
+\midrule
+PD-CD & No fixes (Stage 1)  & 40.0  & 412.2 & 448.7 \\
+PD-CD & Fix~1 only (Stage 2)& 40.0  & 465.3 & 541.5 \\
+PD-CD & Fix~1+2 (Stage 3)   & 40.0  & 449.2 & 499.4 \\
+PD-CD & Fix~1+2+3 (Stage 4) & 60.0  & 279.4 & 419.3 \\
 \midrule
 PG-CD & No fixes (Stage 1)& 46.7  & 415.6 & 428.5 \\
 PG-CD & Fix~1 only (Stage 2)& 53.3  & 474.3 & 505.1 \\
@@ -1379,6 +1428,8 @@ The results over the comprehensive 15-pair evaluation set support three principa
 \begin{enumerate}[itemsep=5pt]
 
 \item \textbf{The stabilisation pipeline significantly reduces execution steps.} Prior to Fix~3 (DP smoothing), the base PG-CD architecture (Stage 1-3) produces highly oscillatory paths requiring over $400$ steps on average. The full stabilised pipeline (Stage 4) reduces this to $278.3$ steps, demonstrating that the failure modes are execution-layer artefacts (looping and stalling) rather than intrinsic pathfinding failures.
+
+\item \textbf{Fix~1 alone temporarily worsens performance, for all three architectures.} At Stage 2 (Fix~1 only), wall violations \emph{increase} relative to Stage 1 for every architecture (e.g., UCD: $423.8\to502.5$; PD-CD: $448.7\to541.5$; PG-CD: $428.5\to505.1$). This is a genuine interaction effect rather than noise: Stage~1 uses a wider base lookahead ($\dlookahead=0.30$), while Stage~2 tightens it to $\dlookahead=0.15$ for closer tracking---but the EMA filter (Section~\ref{sec:fm2}, $\alpha=0.5$ in Stages~1--2) is still active inside the loop at this point. The tighter lookahead demands faster, more precise steering corrections, which the EMA-induced phase lag delays, producing overshoot and aggressive limit-cycle oscillation around the now-tighter tracking point. The regression is resolved only once Fix~2 removes the EMA from the feedback path at Stage~3.
 
 \item \textbf{Implicit constraints are persistently violated across all architectures.} We evaluate safety by computing the number of timesteps the robot's center penetrates any physical maze wall. All architectures incur massive violation counts ($419$ to $542$ timesteps per episode). This reveals a critical limitation: while the diffusion model learns the general topology of the maze, its implicit prior is insufficiently sharp to strictly avoid boundaries during long-horizon navigation.
 
@@ -1465,6 +1516,45 @@ This architectural decision, although minor in appearance, can
 degrade performance from stable tracking to sustained limit-cycling
 without any change to the controller gains or model weights.
 
+\subsection{FM-3 Failures Are Topology-Triggered, Not Length-Triggered}
+\label{sec:fm3_topology}
+
+The FM-3 diagnosis (Section~\ref{sec:fm3_diagnosis}) derives the
+distance-burning condition $\bar{d} < d_{\min}$ from a single fixed
+diagnostic pair. To test whether this condition predicts failure
+more broadly, $\bar{d}$ was computed for all $n=15$ pairs in the
+evaluation set (Appendix~\ref{app:pairwise}) and compared against
+each pair's observed outcome under the full stabilised pipeline.
+The result is a weak correlation between geodesic path length and
+success ($r \approx 0.21$), and the failure rate is similar
+regardless of whether the theoretical burning condition is active
+($41.7\%$ for the $12$ pairs where $\bar{d} < d_{\min}$, versus
+$33.3\%$ for the $3$ pairs where it is not)---if anything, the sign
+runs opposite the naive prediction that shorter paths burn more and
+should fail more consistently.
+
+Qualitative inspection of the planner output for all six failing
+pairs (P02, P05, P07, P11, P13, and P14) clarifies why. In every
+case, the trajectory does not fail by generating waypoints that
+intersect a wall; rather, each one develops a self-crossing,
+non-monotone retracing loop---consistent with the FM-3 mechanism
+already derived---localised at a specific corner or enclosed pocket
+in the maze, rather than distributed uniformly along the route.
+Pairs with long but geometrically simple routes (e.g., P06 and P09,
+the two longest in the set) succeed because their paths do not pass
+through such features; pairs with short but corner-dense routes
+(e.g., P02 and P14) fail despite having ample notional step budget.
+This indicates that $\bar{d} < d_{\min}$ is a condition correctly
+derived from the model's fixed-horizon temporal prior, but that
+whether it is actually \emph{triggered} in practice depends on
+local route geometry rather than aggregate path length alone. A
+route-level complexity measure (e.g., corner count or minimum
+corridor width along the specific path) alongside $\bar{d}$ would
+likely be substantially more predictive of failure than $\bar{d}$
+in isolation; this was not computed within the scope of the present
+work and is proposed as a direct extension in
+Chapter~\ref{chap:future} (FW6).
+
 \subsection{The Generalization Gap in Explicit Constraints}
 
 The benchmark results expose a profound gap between explicit constraints and implicit generalization. While PG-CD and PD-CD successfully project the trajectory to satisfy the explicit circular obstacle constraint $\Pi_{\mathcal{F}}$, this rigidity comes at a cost. Explicitly constrained architectures often incur higher average wall violation counts than the unconstrained baseline (e.g., PG-CD Stage 1 at $428.5$ vs. UCD Stage 1 at $423.8$; PD-CD Stage 2 at $541.5$ vs. UCD Stage 2 at $502.5$). By aggressively projecting waypoints away from the analytical obstacle, they force the robot closer to the implicit maze walls that they were never explicitly trained to avoid. 
@@ -1473,7 +1563,7 @@ For deployment in continuous control, this indicates that explicit score-space p
 
 \section{Relationship to the Constrained Diffuser Literature}
 
-The present findings constitute a critical \emph{execution-level empirical validation} of the theoretical claims advanced in the Constrained Diffuser framework~\citep{zhang2026constrained}. Whereas prior evaluations measured constraint satisfaction in waypoint space (offline metrics) against explicitly defined analytical boundaries, the present work measures it in action-space execution (online metrics) against the full geometry of the environment. 
+The present findings provide additional \emph{execution-level empirical evidence} relevant to the theoretical claims advanced in the Constrained Diffuser framework~\citep{zhang2026constrained}, obtained on a single benchmark environment with a modest evaluation set (Section~\ref{sec:limitations}). Whereas prior evaluations measured constraint satisfaction in waypoint space (offline metrics) against explicitly defined analytical boundaries, the present work measures it in action-space execution (online metrics) against the full geometry of the environment. 
 
 The empirical reality demonstrates that while explicit constraints strictly enforce analytical requirements, they fail to generalize to the implicitly learned background geometry. Deploying such planners safely requires either comprehensively defining all environmental constraints analytically---such as through Control Barrier Functions~\citep{ames2019cbf}---or fundamentally improving the diffusion prior's sensitivity to implicitly learned topological boundaries. This analysis heavily relied on the foundational Constrained Diffuser repository, while integrating and adapting execution-level paradigms from SafeDiffuser~\citep{xiao2023safediffuser} to rectify unstable tracking dynamics.
 
@@ -1514,6 +1604,14 @@ The empirical reality demonstrates that while explicit constraints strictly enfo
   replanning, e.g., at intervals of $H$ steps, would permit
   recovery from mid-episode tracking failures, but at the cost of
   additional computational burden.
+
+\item \textbf{Qualitative basis for topology-triggering.}
+  The finding in Section~\ref{sec:fm3_topology}, that FM-3 failures
+  localise at specific route geometry rather than tracking aggregate
+  path length, is based on visual inspection of the six failing
+  trajectories rather than a quantitative complexity metric. A
+  formal route-level measure (Future Work item FW6) would allow this
+  claim to be tested statistically rather than qualitatively.
 
 \end{itemize}
 
@@ -1563,6 +1661,18 @@ The empirical reality demonstrates that while explicit constraints strictly enfo
   actuator delay.
   \end{sloppypar}
 
+\item \textbf{Route-Level Geometric Complexity Metric.}
+  Section~\ref{sec:fm3_topology} shows that the distance-burning
+  condition $\bar{d} < d_{\min}$ is necessary but not sufficient to
+  predict FM-3 failure: whether it is actually triggered depends on
+  local route geometry (corner density, minimum corridor width)
+  rather than aggregate path length alone. A quantitative
+  complexity measure computed per start--goal pair, combined with
+  $\bar{d}$, would likely predict failure substantially better than
+  either signal in isolation, and could be used as an
+  inference-time trigger for adaptive horizon selection or targeted
+  re-denoising.
+
 \end{enumerate}
 
 % ============================================================
@@ -1598,7 +1708,9 @@ abstraction:
         shortening applied upstream of the tracking controller.
 \end{itemize}
 
-Under the fully stabilised pipeline, the empirical benchmark yielded an unexpected insight into the limits of explicitly constrained architectures. While PG-CD and PD-CD successfully enforced the strict mathematical boundaries they were explicitly conditioned upon, this architectural rigidity compromised their generalized safety. When deployed in complex environments with implicitly learned boundaries (the maze walls), the aggressive explicit projections forced the controllers closer to the background geometry, incurring higher boundary violations in many configurations (e.g., PG-CD Stage 1 at $428.5$ vs. UCD Stage 1 at $423.8$; PD-CD Stage 2 at $541.5$ vs. UCD Stage 2 at $502.5$) than the unconstrained UCD baseline. Explicit constraint satisfaction, paradoxically, degraded overall safety.
+Under the fully stabilised pipeline, the empirical benchmark yielded an unexpected insight into the limits of explicitly constrained architectures. While PG-CD and PD-CD successfully enforced the strict mathematical boundaries they were explicitly conditioned upon, this architectural rigidity compromised their generalized safety. When deployed in complex environments with implicitly learned boundaries (the maze walls), the aggressive explicit projections forced the controllers closer to the background geometry, incurring higher boundary violations in many configurations (e.g., PG-CD Stage 1 at $428.5$ vs. UCD Stage 1 at $423.8$; PD-CD Stage 2 at $541.5$ vs. UCD Stage 2 at $502.5$) than the unconstrained UCD baseline. Explicit constraint satisfaction, paradoxically, degraded overall safety. Under the full pipeline (Stage 4), all three architectures converge to nearly identical performance ($60.0\%$ success for UCD and PD-CD, $60.0\%$ for PG-CD; wall violations of $419.0$--$419.8$ across all three), indicating that---at least on this benchmark---the explicit constraint mechanisms provide no measurable safety benefit once execution-layer instabilities are independently corrected. This should be read as a bounded, environment-specific finding rather than a general verdict on constrained-diffusion methods: it was obtained on a single environment (\texttt{maze2d-large-v1}), a single fixed temporal horizon, and a $15$-pair evaluation set with non-trivial seed-to-seed variance (Section~\ref{sec:limitations}); it was not compared against non-diffusion planning baselines. What the evidence does support is a narrower, falsifiable claim: that the dominant safety bottleneck in this pipeline is the sharpness of the \emph{implicitly} learned wall geometry, not the presence or absence of \emph{explicit} analytical constraints on a separately designated obstacle---and that improving the former is likely to matter more than adding further instances of the latter.
+
+A related refinement, developed in Section~\ref{sec:fm3_topology}, is that FM-3 (distance burning) is better understood as \emph{topology-triggered} than \emph{length-triggered}: the theoretical condition $\bar{d} < d_{\min}$, derived from a single diagnostic pair, does not reliably predict failure across the full $15$-pair evaluation set ($r \approx 0.21$ between geodesic distance and success), but qualitative inspection of all six failing trajectories shows a consistent signature---a self-crossing retracing loop localised at a maze corner or pocket, never a waypoint that intersects a wall. This indicates the mechanism is real but is triggered by local route geometry rather than aggregate path length, a distinction that would not have been visible from the single-pair diagnosis alone.
 
 None of the three fixes developed in this report---adaptive
 Pure-Pursuit scheduling, the EMA-bypass protocol, and Tier-1
@@ -1682,11 +1794,22 @@ generative robotic systems.
 
 \section*{Closed-Loop Transfer Function of Pure-Pursuit}
 
-The point-mass robot is modelled as an integrator plant:
+The following analysis applies standard discrete-time (z-domain)
+control theory~\citep{ogata1995discrete}. The point-mass robot is
+modelled as an integrator plant:
 \begin{equation}
   P(z) = \frac{1}{z - 1}
   \quad\text{(unit-delay integrator in discrete time)}.
 \end{equation}
+This is a simplification: the true environment state includes
+velocity ($\dot{x}, \dot{y}$), so the underlying physical plant is
+closer to a double integrator. The single-integrator abstraction is
+justified here because the IDM $f_\phi$ is trained to invert the
+full state-transition dynamics---mapping a desired next state
+directly to the action that achieves it---so the closed loop as
+seen by the outer Pure-Pursuit controller behaves, to first order,
+as a single unit-delay position response rather than the raw
+second-order plant dynamics.
 
 The Pure-Pursuit controller computes a proportional position
 command with effective gain $K = 2/\dlookahead$, obtained by
@@ -1724,10 +1847,16 @@ path replaces $K_{\mathrm{pp}}$ with $K_{\mathrm{pp}} \cdot H(z)$:
 This introduces an additional pole at $z = 1-\alpha < 1$, which
 (i) increases the gain crossover frequency, and (ii) reduces the
 phase at crossover by $|\phi(\omega^*)|$
-(Equation~\eqref{eq:phase_lag}). For $\alpha = 0.9$, a typical
-smoothing coefficient, the resulting phase margin reduction at
-$\omega^* = \pi/4$ is approximately $-18^\circ$, consistent with
-the underdamped response observed in
+(Equation~\eqref{eq:phase_lag}). The EMA filter used in the
+baseline configuration (Stages~1--2 of the benchmark,
+Section~\ref{sec:benchmark}) had $\alpha = 0.5$. By
+Equation~\eqref{eq:omega_star}, the resulting phase lag attains its
+maximum at $\omega^\star = \arccos(0.5) = \pi/3$, where
+$\phi(\omega^\star) = -\arcsin(0.5) = -30.0^\circ$; at the
+representative gain-crossover frequency $\omega = \pi/4$ used
+above, the phase lag is $\phi(\pi/4) \approx -28.7^\circ$. Both
+figures represent a substantial reduction in phase margin,
+consistent with the underdamped response observed in
 Figure~\ref{fig:fm2_oscillation}.
 
 \chapter{Douglas--Peucker Algorithm (Full Pseudocode)}
@@ -1787,11 +1916,74 @@ $\delta_{\mathrm{goal}}$         & Goal tolerance                 & 0.50   \\
 $\epsilon_{\mathrm{track}}$      & Measured max tracking error    & 0.10   \\
 $\epsilon_{\mathrm{DP}}$         & Douglas--Peucker tolerance     & 0.25   \\
 $\eta$ (PD)                      & Dual multiplier step size      & $2.5{\times}10^{-2}$ \\
-$\alpha$ (EMA, disabled)         & EMA coefficient                & N/A    \\
+$\alpha$ (EMA, Stages 1--2)      & EMA coefficient (baseline)     & 0.50   \\
+$\alpha$ (EMA, Stages 3--4)      & EMA coefficient (bypassed)     & 1.0 (disabled) \\
 IDM hidden size                  & MLP hidden layer width         & 512    \\
 IDM training                     & Max epochs / batch size        & 10 / 2048 \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\chapter{Per-Pair Geodesic Distance and Distance-Burning Analysis}
+\label{app:pairwise}
+
+Table~\ref{tab:pairwise} reports, for all $n=15$ pairs in the
+evaluation set, the Euclidean and A*-computed geodesic distances,
+the resulting mean required displacement $\bar{d} = L_{\mathrm{phys}}/T$
+($T=384$), whether the distance-burning condition
+$\bar{d} < d_{\min}$ ($d_{\min}=0.035$) is theoretically active, and
+the observed outcome under the full stabilised pipeline. Failed
+episodes are reported here with their raw timeout step count
+($801$). Two different averaging conventions are used when
+aggregating this per-pair data into
+Table~\ref{tab:ablation_progressive}: \textbf{Steps} is averaged
+over the $9$ successful pairs only (mean $278.3$, consistent with
+the Stage~4 values reported there), since step count is undefined
+for an episode that never reaches the goal; \textbf{Avg.\
+Violations} is averaged over all $15$ pairs including timeouts
+(mean $419.0$, likewise consistent with Stage~4), since wall
+contact accrues throughout an episode's full duration regardless of
+outcome. This data supports the discussion in
+Section~\ref{sec:fm3_topology}.
+
+\begin{table}[H]
+\centering
+\caption{Per-pair geodesic distance, distance-burning status, and
+  observed outcome, evaluated under the full stabilised pipeline
+  (Stage 4). ``Burn active'' denotes $\bar{d} < d_{\min}$.}
+\label{tab:pairwise}
+\begin{tabular}{@{}cccccccc@{}}
+\toprule
+\textbf{Pair} & \textbf{Euclid.} & \textbf{Geodesic} & $\bar{d}$ &
+\textbf{Burn} & \textbf{Success} & \textbf{Steps} &
+\textbf{Violations} \\
+\midrule
+P01 & 2.92 & 3.47  & 0.0090 & Active     & Yes & 156 & 123.0 \\
+P02 & 1.85 & 2.26  & 0.0059 & Active     & No (timeout) & 801 & 756.0 \\
+P03 & 0.93 & 8.05  & 0.0210 & Active     & Yes & 50  & 26.0  \\
+P04 & 2.57 & 10.93 & 0.0285 & Active     & Yes & 200 & 117.0 \\
+P05 & 1.13 & 8.40  & 0.0219 & Active     & No (timeout) & 801 & 784.0 \\
+P06 & 5.98 & 16.45 & 0.0428 & Not active & Yes & 246 & 139.0 \\
+P07 & 3.37 & 17.44 & 0.0454 & Not active & No (timeout) & 801 & 786.0 \\
+P08 & 5.82 & 9.13  & 0.0238 & Active     & Yes & 245 & 131.0 \\
+P09 & 5.98 & 18.31 & 0.0477 & Not active & Yes & 413 & 281.0 \\
+P10 & 5.11 & 6.10  & 0.0159 & Active     & Yes & 379 & 231.0 \\
+P11 & 3.40 & 6.04  & 0.0157 & Active     & No (timeout) & 801 & 785.0 \\
+P12 & 8.88 & 10.15 & 0.0264 & Active     & Yes & 391 & 280.0 \\
+P13 & 9.95 & 12.97 & 0.0338 & Active     & No (timeout) & 801 & 789.0 \\
+P14 & 3.14 & 3.75  & 0.0098 & Active     & No (timeout) & 801 & 782.0 \\
+P15 & 9.05 & 12.19 & 0.0317 & Active     & Yes & 425 & 275.0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Across the $12$ pairs where the burning condition is active, the
+observed failure rate is $41.7\%$; across the $3$ pairs where it is
+not (P06, P07, P09), the failure rate is $33.3\%$. The correlation
+between geodesic distance and success across all $15$ pairs is
+$r \approx 0.21$. Neither statistic supports geodesic path length,
+or the derived quantity $\bar{d}$, as a strong standalone predictor
+of failure; see Section~\ref{sec:fm3_topology} for the qualitative
+explanation based on route-level topology.
 
 \end{document}
